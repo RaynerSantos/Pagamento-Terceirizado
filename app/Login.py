@@ -35,12 +35,19 @@ st.markdown(
         background-color: #000000;
     }
 
+    /* Esconde o menu lateral */
     [data-testid="stSidebar"] {
         display: none;  /* 👈 Esconde o menu lateral */
     }
 
+    /* Remove o espaço lateral */
     [data-testid="stAppViewContainer"] > .main {
         margin-left: 0;  /* 👈 Remove o espaço lateral */
+    }
+
+    /* Cor de fundo da barra lateral */
+    [data-testid="stSidebar"] {
+        background-color: #333333;
     }
 
     /* Cor do título */
