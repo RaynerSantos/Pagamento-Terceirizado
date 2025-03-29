@@ -46,9 +46,10 @@ st.markdown(
 
     /* Cor do título */
     h1 {
-        color: #FFFFFF;
-        text-align: center;
-    }
+    color: white !important;
+    text-align: center;
+    font-weight: bold;
+}
 
     /* Cor do subtítulo */
     h2 {
@@ -64,6 +65,16 @@ st.markdown(
     button {
         background-color: #20541B !important;
         color: white !important;
+    }
+
+    /* Caixa do formulário */
+    div[data-testid="stForm"] {
+        background-color: #1e1e1e;  /* cinza escuro */
+        padding: 30px;
+        border-radius: 12px;
+        border: 1px solid #444444;
+        max-width: 600px;
+        margin: auto;
     }
     </style>
     """,
