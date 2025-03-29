@@ -1,0 +1,10 @@
+streamlit
+pyodbc
+pandas
+numpy
+oauth2client
+openpyxl
+gspread
+google-auth
+google-auth-oauthlib
+google-auth-httplib2

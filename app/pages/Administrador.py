@@ -82,7 +82,7 @@ def salvar_excel_com_formatacao(bd):
     wb.save(output)
     return output.getvalue()
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
 # CSS personalizado
 st.markdown(
