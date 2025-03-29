@@ -4,8 +4,17 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login
+import json
+from google.oauth2 import service_account
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
+
+# Carrega a chave do Streamlit Secrets
+gcp_info = json.loads(st.secrets["gcp_service_account"])
+
+# Cria credencial a partir do dicionário
+credentials = service_account.Credentials.from_service_account_info(gcp_info)
+
 
 # Nome do projeto, dataset e tabela
 project_id = "pagamento-terceirizado"

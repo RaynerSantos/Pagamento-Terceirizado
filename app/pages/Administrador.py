@@ -9,6 +9,16 @@ from openpyxl.styles import PatternFill, Alignment, Font, Border, Side
 from openpyxl.styles.numbers import BUILTIN_FORMATS
 from io import BytesIO
 from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login
+import json
+from google.oauth2 import service_account
+
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
+
+# Carrega a chave do Streamlit Secrets
+gcp_info = json.loads(st.secrets["gcp_service_account"])
+
+# Cria credencial a partir do dicionário
+credentials = service_account.Credentials.from_service_account_info(gcp_info)
 
 # Função para salvar a tabela em um único Excel com formatação
 def salvar_excel_com_formatacao(bd):
@@ -82,7 +92,6 @@ def salvar_excel_com_formatacao(bd):
     wb.save(output)
     return output.getvalue()
 
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
 # CSS personalizado
 st.markdown(
