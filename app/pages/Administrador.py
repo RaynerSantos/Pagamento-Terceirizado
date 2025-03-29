@@ -157,8 +157,8 @@ st.markdown(
 
     /* Campos de texto */
     input, select, textarea {
-        background-color: #2e2e2e !important;
-        color: white !important;
+        /* background-color: #2e2e2e !important; */
+        /* color: white !important; */
         border: none !important;
         border-radius: 6px !important;
     }
