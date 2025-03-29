@@ -15,7 +15,7 @@ gcp_info = json.loads(st.secrets["gcp_service_account"])
 credentials = service_account.Credentials.from_service_account_info(gcp_info)
 
 # Usa ao inicializar o cliente
-client = bigquery.Client(credentials=credentials, project=gcp_info["pagamento-terceirizado"])
+client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
 # Nome do projeto, dataset e tabela
 project_id = "pagamento-terceirizado"
@@ -25,7 +25,7 @@ table_id = "horas_colaborador"
 # ===== Função para ler a tabela ===== #
 def ler_tabela(project_id, dataset_id, table_id):
     # Inicializa o cliente
-    client = bigquery.Client(credentials=credentials, project=gcp_info["pagamento-terceirizado"])
+    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
     # Consulta SQL para ler a tabela
     query = f"SELECT * FROM `{project_id}.{dataset_id}.{table_id}`"
@@ -37,7 +37,7 @@ def ler_tabela(project_id, dataset_id, table_id):
 def incluir_servico(project_id, dataset_id, table_id, 
                     TERCEIRIZADO, SERVICO, DESCRICAO, PROJETO, PERIODO, HORAS, VALOR, TOTAL, QUEM_EMITE, OBSERVACAO):
     # Inicializa o cliente
-    client = bigquery.Client(credentials=credentials, project=gcp_info["pagamento-terceirizado"])
+    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
     # DataFrame com dados novos
     novos_dados = pd.DataFrame({
@@ -65,7 +65,7 @@ def incluir_servico(project_id, dataset_id, table_id,
 # ===== Função para incluir um novo login ===== #
 def incluir_login(project_id, dataset_id, table_id, LOGIN, SENHA, NOME_COMPLETO):
     # Inicializa o cliente
-    client = bigquery.Client(credentials=credentials, project=gcp_info["pagamento-terceirizado"])
+    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
     # DataFrame com dados novos
     novos_dados = pd.DataFrame({
@@ -121,7 +121,7 @@ def excluir_login(project_id, dataset_id, table_id, LOGIN, df_logins):
 # ===== Função para apagar a tabela ===== #
 def apagar_tabela(project_id, dataset_id, table_id):
     # Inicializa o cliente
-    client = bigquery.Client(credentials=credentials, project=gcp_info["pagamento-terceirizado"])
+    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
     # Consulta SQL para apagar a tabela
     query = f"TRUNCATE TABLE `{project_id}.{dataset_id}.{table_id}`"
