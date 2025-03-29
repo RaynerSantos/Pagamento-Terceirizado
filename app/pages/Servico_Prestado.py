@@ -76,6 +76,21 @@ st.markdown(
         max-width: 600px;
         margin: auto;
     }
+
+    /* Campos de texto */
+    input, select, textarea {
+        background-color: #2e2e2e !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 6px !important;
+    }
+
+    /* Botão */
+    button[kind="primary"] {
+        background-color: #20541B !important;
+        color: white !important;
+        border-radius: 8px !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
