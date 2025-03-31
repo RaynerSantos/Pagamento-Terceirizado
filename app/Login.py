@@ -98,7 +98,7 @@ st.markdown(
         border-radius: 8px !important;
     }
 
-    table {
+    /* table {
     background-color: #000000;
     color: white;
     border-collapse: collapse;
@@ -118,7 +118,7 @@ st.markdown(
     }
     tr:nth-child(even) {
         background-color: #1c1c1c;
-    }
+    } */
     </style>
     """,
     unsafe_allow_html=True

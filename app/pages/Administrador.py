@@ -170,7 +170,7 @@ st.markdown(
         border-radius: 8px !important;
     }
 
-    table {
+    /* table {
     background-color: #000000;
     color: white;
     border-collapse: collapse;
@@ -190,7 +190,7 @@ st.markdown(
     }
     tr:nth-child(even) {
         background-color: #1c1c1c;
-    }
+    } */
     </style>
     """,
     unsafe_allow_html=True
@@ -210,9 +210,9 @@ st.write("📋 Tabela com as informações de Serviços que foram prestados pelo
 df = ler_tabela(project_id="pagamento-terceirizado", 
                 dataset_id="pagamento_terceirizado", 
                 table_id="horas_colaborador")
-# st.dataframe(df, width=2000, hide_index=True)
+st.dataframe(df, width=2000, hide_index=True)
 # Exibe a tabela com HTML estilizado
-st.markdown(df.to_html(index=False, escape=False), unsafe_allow_html=True)
+# st.markdown(df.to_html(index=False, escape=False), unsafe_allow_html=True)
 
 # Link para download
 excel_data = salvar_excel_com_formatacao(df)
@@ -231,9 +231,9 @@ st.write("📋 Tabela com as informações de logins e senhas de cada colaborado
 df_logins = ler_tabela(project_id="pagamento-terceirizado", 
                        dataset_id="pagamento_terceirizado", 
                        table_id="login_colaborador")
-# st.dataframe(df_logins, hide_index=True)
+st.dataframe(df_logins, hide_index=True)
 # Exibe a tabela com HTML estilizado
-st.markdown(df.to_html(index=False, escape=False), unsafe_allow_html=True)
+# st.markdown(df.to_html(index=False, escape=False), unsafe_allow_html=True)
 
 st.write("")
 st.write("")
