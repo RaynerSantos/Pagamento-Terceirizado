@@ -148,15 +148,26 @@ st.markdown(
 # Formulário de preenchimento do serviço prestado
 with st.form(key="servico"):
     TERCEIRIZADO = st.text_input(label="Informe o nome completo")
-    SERVICO = st.selectbox(label="Informe o tipo de serviço prestado", options=["MONITORIA", "TRANSCRIÇÃO/CORTE"])
-    DESCRICAO = st.selectbox(label="Informe a descrição do tipo de serviço prestado", options=["EXAME DE DADOS", "TRANSCRIÇÃO/CORTE"])
-    PROJETO = st.text_input(label="Informe o nome do projeto", placeholder="1217-1 - Cielo / CP / Satisfação 1ª onda_2025")
+    SERVICO = st.selectbox(label="Informe o tipo de serviço prestado", options=["TRANSCRIÇÃO/CORTE"])
+    DESCRICAO = st.selectbox(label="Informe a descrição do tipo de serviço prestado", options=["COMPILAÇÃO E FORNECIMENTO DE DADOS"])
+    PROJETO = st.selectbox(label="Informe o nome do projeto", options=["1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
+                                                                       "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
+                                                                       "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
+                                                                       "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025",
+                                                                       "1.216-2 CIELO/CP/TRACKING NPS MENSAL 2ª ONDA_2025",
+                                                                       "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
+                                                                       "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
+                                                                       "1.216-5 CIELO/CP/TRACKING NPS MENSAL 5ª ONDA_2025",
+                                                                       "1.216-6 CIELO/CP/TRACKING NPS MENSAL 6ª ONDA_2025",
+                                                                       "1.216-7 CIELO/CP/TRACKING NPS MENSAL 7ª ONDA_2025",
+                                                                       "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
+                                                                       "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"])
     PERIODO = st.text_input(label="Informe o período no qual o projeto ocorreu", placeholder="17/08/2024 A 16/09/2024")
     HORAS = st.text_input(label="Informe a quantidade de horas trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
     VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="15,00")
     QUEM_EMITE = st.selectbox(label="Informe quem emite a NF", options=["MEI", "PJ"])
-    OBSERVACAO = st.text_input(label="Caso outra pessoa emita a NF favor informar ou deixar em branco", 
-                               placeholder="LUCAS SANTOS EMITE")
+    # OBSERVACAO = st.text_input(label="Caso outra pessoa emita a NF favor informar ou deixar em branco", 
+    #                            placeholder="LUCAS SANTOS EMITE")
     input_buttom_submit = st.form_submit_button("Enviar")
 
 if input_buttom_submit:
@@ -181,7 +192,7 @@ if input_buttom_submit:
                         VALOR=round(VALOR,2), 
                         TOTAL=round(TOTAL,2),
                         QUEM_EMITE=QUEM_EMITE, 
-                        OBSERVACAO=OBSERVACAO)
+                        OBSERVACAO="")
         st.success("✅ Serviço incluído com sucesso!")
         st.write("Você já pode fechar a página.")
 
