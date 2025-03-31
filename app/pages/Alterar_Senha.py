@@ -119,6 +119,8 @@ st.markdown(
 )
 
 st.title("🔐 Alterar Senha")
+st.write("")
+st.write("")
 # Verifica se o usuário está logado
 if "LOGIN" in st.session_state:
     st.write(f"Olá, **{st.session_state.LOGIN}**! Digite sua nova senha abaixo:")

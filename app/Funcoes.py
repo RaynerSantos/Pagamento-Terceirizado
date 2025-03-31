@@ -89,8 +89,8 @@ def alterar_senha(project_id, dataset_id, table_id, LOGIN, SENHA, df_logins):
     df_logins.loc[df_logins["LOGIN"] == LOGIN, "SENHA"] = SENHA
 
     # Envia a tabela inteira novamente, substituindo a antiga
-    # client = bigquery.Client(credentials=credentials, project=gcp_info["pagamento-terceirizado"])
-    client = bigquery.Client()
+    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+    # client = bigquery.Client()
     tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
 
     job_config = bigquery.LoadJobConfig(write_disposition="WRITE_TRUNCATE")  # Sobrescreve
@@ -106,8 +106,8 @@ def excluir_login(project_id, dataset_id, table_id, LOGIN, df_logins):
     df_logins = df_logins.loc[df_logins["LOGIN"] != LOGIN]
 
     # Envia a tabela inteira novamente, substituindo a antiga
-    # client = bigquery.Client(credentials=credentials, project=gcp_info["pagamento-terceirizado"])
-    client = bigquery.Client()
+    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+    # client = bigquery.Client()
     tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
 
     job_config = bigquery.LoadJobConfig(write_disposition="WRITE_TRUNCATE")  # Sobrescreve
