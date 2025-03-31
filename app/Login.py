@@ -97,6 +97,28 @@ st.markdown(
         color: white !important;
         border-radius: 8px !important;
     }
+
+    table {
+    background-color: #000000;
+    color: white;
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 14px;
+    }
+    th, td {
+        border: 1px solid #333;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #111111;
+        color: #FFFFFF;
+    }
+    tr:nth-child(even) {
+        background-color: #1c1c1c;
+    }
     </style>
     """,
     unsafe_allow_html=True
