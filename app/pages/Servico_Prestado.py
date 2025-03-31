@@ -165,7 +165,7 @@ with st.form(key="servico"):
     PERIODO = st.text_input(label="Informe o período no qual o projeto ocorreu", placeholder="17/08/2024 A 16/09/2024")
     HORAS = st.text_input(label="Informe a quantidade de horas trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
     VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="15,00")
-    QUEM_EMITE = st.selectbox(label="Informe quem emite a NF", options=["MEI", "PJ"])
+    QUEM_EMITE = st.selectbox(label="Informe quem emite a NF", options=["MEI"])
     # OBSERVACAO = st.text_input(label="Caso outra pessoa emita a NF favor informar ou deixar em branco", 
     #                            placeholder="LUCAS SANTOS EMITE")
     input_buttom_submit = st.form_submit_button("Enviar")
