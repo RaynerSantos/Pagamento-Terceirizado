@@ -266,3 +266,8 @@ if input_buttom_submit_new_login:
                       LOGIN=NEW_LOGIN,
                       df_logins=df_logins)
         st.success("✅ Login excluído da base com sucesso!")
+
+st.write("")
+st.write("")
+if st.button("🔄 Recarregar página"):
+    st.rerun()
