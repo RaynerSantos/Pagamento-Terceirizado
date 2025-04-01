@@ -10,6 +10,7 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import PatternFill, Alignment, Font, Border, Side
 from openpyxl.styles.numbers import BUILTIN_FORMATS
 from io import BytesIO
+from datetime import datetime
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
@@ -29,12 +30,21 @@ table_id = "horas_colaborador"
 
 # ===== Função para ler a tabela ===== #
 def ler_tabela(project_id, dataset_id, table_id):
-    # Inicializa o cliente
-    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+    if table_id == "login_colaborador":
+        # Inicializa o cliente
+        client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
-    # Consulta SQL para ler a tabela
-    query = f"SELECT * FROM `{project_id}.{dataset_id}.{table_id}`"
-    df = client.query(query).to_dataframe()
+        # Consulta SQL para ler a tabela
+        query = f"SELECT * FROM `{project_id}.{dataset_id}.{table_id}`"
+        df = client.query(query).to_dataframe()
+
+    elif table_id == "horas_colaborador":
+        # Inicializa o cliente
+        client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+
+        # Consulta SQL para ler a tabela
+        query = f"SELECT * FROM `{project_id}.{dataset_id}.{table_id}` ORDER BY DATA_CRIACAO DESC"
+        df = client.query(query).to_dataframe()
 
     return df
 
@@ -55,14 +65,15 @@ def incluir_servico(project_id, dataset_id, table_id,
         "VALOR": [VALOR],
         "TOTAL": [TOTAL],
         "QUEM EMITE A NF": [QUEM_EMITE],
-        "OBSERVACAO": [OBSERVACAO]
+        "OBSERVACAO": [OBSERVACAO],
+        "DATA_CRIACAO": [datetime.now()]
     })
 
     # Define a tabela completa
     tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
 
     # Insere no modo append
-    job = client.load_table_from_dataframe(tabela_destino, novos_dados)
+    job = client.load_table_from_dataframe(novos_dados, tabela_destino)
     job.result()  # Espera o job terminar
     print("Dados inseridos com sucesso!")
     return
