@@ -131,7 +131,6 @@ if st.button("🔒 Alterar minha senha"):
     st.switch_page("pages/Alterar_Senha.py")
 
 st.write("")
-st.write("")
 
 df = ler_tabela(project_id="pagamento-terceirizado", 
                 dataset_id="pagamento_terceirizado", 
@@ -145,7 +144,7 @@ df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
 # Link para download
 excel_data = salvar_excel_com_formatacao(df_usuario)
 st.download_button(
-    label="Baixar em Excel",
+    label="Lançamentos passados",
     data=excel_data,
     file_name="Horas Colaborador.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

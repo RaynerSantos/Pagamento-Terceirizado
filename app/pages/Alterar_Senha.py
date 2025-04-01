@@ -146,5 +146,9 @@ if "LOGIN" in st.session_state:
                           SENHA=nova_senha, 
                           df_logins=df_logins)
             st.success("✅ Senha alterada com sucesso!")
+    
+    # Botão para voltar à página principal
+    if st.button("🔙 Voltar para a página de serviços"):
+        st.switch_page("pages/Servico_Prestado.py")
 else:
     st.warning("⚠️ Você precisa estar logado para alterar sua senha.")
