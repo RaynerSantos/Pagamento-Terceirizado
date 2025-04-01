@@ -62,7 +62,7 @@ def incluir_servico(project_id, dataset_id, table_id,
     tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
 
     # Insere no modo append
-    job = client.load_table_from_dataframe(novos_dados, tabela_destino)
+    job = client.load_table_from_dataframe(tabela_destino, novos_dados)
     job.result()  # Espera o job terminar
     print("Dados inseridos com sucesso!")
     return
