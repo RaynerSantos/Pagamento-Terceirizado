@@ -3,7 +3,7 @@ from google.cloud import bigquery
 import pandas as pd
 import numpy as np
 import streamlit as st
-from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login
+from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login, salvar_excel_com_formatacao
 import json
 from google.oauth2 import service_account
 
@@ -129,6 +129,23 @@ st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
 st.write("")
 if st.button("🔒 Alterar minha senha"):
     st.switch_page("pages/Alterar_Senha.py")
+
+st.write("")
+st.write("")
+
+df = ler_tabela(project_id="pagamento-terceirizado", 
+                dataset_id="pagamento_terceirizado", 
+                table_id="horas_colaborador")
+df_usuario = df.loc[df["LOGIN"] == st.session_state.LOGIN]
+
+# Link para download
+excel_data = salvar_excel_com_formatacao(df_usuario)
+st.download_button(
+    label="Baixar em Excel",
+    data=excel_data,
+    file_name="Horas Colaborador.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 st.write("")
 st.write("")

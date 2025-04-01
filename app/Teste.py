@@ -1,9 +1,9 @@
 import os
 from google.cloud import bigquery
 import pandas as pd
-from Funcoes import ler_tabela, incluir_login
+# from Funcoes import ler_tabela, incluir_login
 
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
 # Nome do projeto, dataset e tabela
 project_id = "pagamento-terceirizado"
@@ -81,10 +81,10 @@ TOTAL = total_horas_trabalhadas * VALOR
 print(f'TOTAL:\t{TOTAL}')
 
 df = pd.DataFrame({
-    "LOGIN": ['andreia.goncalves', 'alice.ribeiro', 'joao.silva'],
-    "SENHA": ['123', '123', '123'],
-    "NOME_COMPLETO": ['ANDREIA GONCALVES', 'ALICE RIBEIRO', 'JOAO SILVA']
+    "LOGIN": ['andreia.goncalves', 'alice.ribeiro', 'joao.silva', 'andreia.goncalves'],
+    "SENHA": ['123', '123', '123', '123'],
+    "NOME_COMPLETO": ['ANDREIA GONCALVES', 'ALICE RIBEIRO', 'JOAO SILVA', 'ANDREIA GONCALVES']
 })
 
-new_df = df.loc[df["LOGIN"] != 'andreia.goncalves']
+new_df = df.loc[df["LOGIN"] == 'andreia.goncalves']
 print(f'\n\nnew_df\n{new_df}')
