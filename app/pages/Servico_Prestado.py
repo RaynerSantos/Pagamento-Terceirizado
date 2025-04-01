@@ -131,28 +131,28 @@ if st.button("🔒 Alterar minha senha"):
     st.switch_page("pages/Alterar_Senha.py")
 
 
+if st.button("📥 Lançamentos passados"):
+    df = ler_tabela(project_id="pagamento-terceirizado", 
+                    dataset_id="pagamento_terceirizado", 
+                    table_id="horas_colaborador")
+    df_logins = ler_tabela(project_id="pagamento-terceirizado", 
+                        dataset_id="pagamento_terceirizado", 
+                        table_id="login_colaborador")
+    recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
+    if not recuperar_nome.empty:
+        recuperar_nome = recuperar_nome.iloc[0]
+        df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
 
-df = ler_tabela(project_id="pagamento-terceirizado", 
-                dataset_id="pagamento_terceirizado", 
-                table_id="horas_colaborador")
-df_logins = ler_tabela(project_id="pagamento-terceirizado", 
-                       dataset_id="pagamento_terceirizado", 
-                       table_id="login_colaborador")
-recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
-if not recuperar_nome.empty:
-    recuperar_nome = recuperar_nome.iloc[0]
-    df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
-
-    # Link para download
-    excel_data = salvar_excel_com_formatacao(df_usuario)
-    st.download_button(
-        label="📥 Lançamentos passados",
-        data=excel_data,
-        file_name="Horas Colaborador.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-else: 
-    st.warning("⚠️ Não foi possível encontrar seu nome completo no banco de dados.")
+        # Link para download
+        excel_data = salvar_excel_com_formatacao(df_usuario)
+        st.download_button(
+            label="📥 Lançamentos passados",
+            data=excel_data,
+            file_name="Horas Colaborador.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+    else: 
+        st.warning("⚠️ Não foi possível encontrar seu nome completo no banco de dados.")
 
 st.write("")
 st.write("")
