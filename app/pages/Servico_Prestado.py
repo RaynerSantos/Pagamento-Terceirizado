@@ -153,7 +153,6 @@ st.download_button(
 st.write("")
 st.write("")
 st.write("")
-st.write("")
 
 st.markdown(
     """

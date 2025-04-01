@@ -149,6 +149,7 @@ if "LOGIN" in st.session_state:
     
     st.write("")
     st.write("")
+    st.write("")
     # Botão para voltar à página principal
     if st.button("🔙 Voltar para a página de serviços"):
         st.switch_page("pages/Servico_Prestado.py")
