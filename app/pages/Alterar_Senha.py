@@ -147,6 +147,8 @@ if "LOGIN" in st.session_state:
                           df_logins=df_logins)
             st.success("✅ Senha alterada com sucesso!")
     
+    st.write("")
+    st.write("")
     # Botão para voltar à página principal
     if st.button("🔙 Voltar para a página de serviços"):
         st.switch_page("pages/Servico_Prestado.py")

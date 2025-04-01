@@ -123,14 +123,14 @@ if "login_sucesso" not in st.session_state or not st.session_state.login_sucesso
     st.stop()
 
 #=== Título ===#
-st.title("Pagamento Terceirizado")
+st.title("Horas e Serviços Prestados")
 st.write("")
 st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
 st.write("")
 if st.button("🔒 Alterar minha senha"):
     st.switch_page("pages/Alterar_Senha.py")
 
-st.write("")
+
 
 df = ler_tabela(project_id="pagamento-terceirizado", 
                 dataset_id="pagamento_terceirizado", 
@@ -144,7 +144,7 @@ df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
 # Link para download
 excel_data = salvar_excel_com_formatacao(df_usuario)
 st.download_button(
-    label="Lançamentos passados",
+    label="📥 Lançamentos passados",
     data=excel_data,
     file_name="Horas Colaborador.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
