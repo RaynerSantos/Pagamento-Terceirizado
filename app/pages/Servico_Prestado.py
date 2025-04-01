@@ -136,7 +136,11 @@ st.write("")
 df = ler_tabela(project_id="pagamento-terceirizado", 
                 dataset_id="pagamento_terceirizado", 
                 table_id="horas_colaborador")
-df_usuario = df.loc[df["LOGIN"] == st.session_state.LOGIN]
+df_logins = ler_tabela(project_id="pagamento-terceirizado", 
+                       dataset_id="pagamento_terceirizado", 
+                       table_id="login_colaborador")
+recuperar_nome = df_logins[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
+df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
 
 # Link para download
 excel_data = salvar_excel_com_formatacao(df_usuario)

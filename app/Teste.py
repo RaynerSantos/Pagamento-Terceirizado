@@ -86,5 +86,8 @@ df = pd.DataFrame({
     "NOME_COMPLETO": ['ANDREIA GONCALVES', 'ALICE RIBEIRO', 'JOAO SILVA', 'ANDREIA GONCALVES']
 })
 
+recuperar_nome = df.loc[df["LOGIN"] == 'andreia.goncalves', "NOME_COMPLETO"]
+print(f'\nnome: {recuperar_nome}')
+
 new_df = df.loc[df["LOGIN"] == 'andreia.goncalves']
-print(f'\n\nnew_df\n{new_df}')
+print(f'\nnew_df\n{new_df}')
