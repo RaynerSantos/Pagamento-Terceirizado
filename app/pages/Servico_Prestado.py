@@ -221,3 +221,8 @@ if input_buttom_submit:
 
     except ValueError:
         st.error("❌ Valor da hora inválido. Use vírgula como separador decimal (Ex.: 15,00).")
+
+st.write("")
+st.write("")
+if st.button("🔄 Recarregar página"):
+    st.rerun()
