@@ -43,7 +43,7 @@ def ler_tabela(project_id, dataset_id, table_id):
         client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
         # Consulta SQL para ler a tabela
-        query = f"SELECT * FROM `{project_id}.{dataset_id}.{table_id}` ORDER BY DATA_CRIACAO DESC"
+        query = f"SELECT * FROM `{project_id}.{dataset_id}.{table_id}` ORDER BY DATA_CRIACAO ASC"
         df = client.query(query).to_dataframe()
 
     return df
