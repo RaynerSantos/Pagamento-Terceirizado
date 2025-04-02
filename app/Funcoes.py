@@ -154,7 +154,7 @@ def salvar_excel_com_formatacao(bd):
     # Crie uma nova planilha Excel
     wb = Workbook()
     ws = wb.active
-    ws.title = "Servico Prestado"
+    ws.title = "Pagamento"
 
     # # Remover as linhas de grade do Excel
     # ws.sheet_view.showGridLines = False

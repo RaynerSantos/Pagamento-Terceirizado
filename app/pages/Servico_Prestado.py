@@ -124,7 +124,7 @@ if "login_sucesso" not in st.session_state or not st.session_state.login_sucesso
     st.stop()
 
 #=== Título ===#
-st.title("Horas e Serviços Prestados")
+st.title("Pagamento Transcrição/Corte")
 st.write("")
 st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
 st.write("")

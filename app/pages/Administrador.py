@@ -27,7 +27,7 @@ def salvar_excel_com_formatacao(bd):
     # Crie uma nova planilha Excel
     wb = Workbook()
     ws = wb.active
-    ws.title = "Servico Prestado"
+    ws.title = "Pagamento"
 
     # # Remover as linhas de grade do Excel
     # ws.sheet_view.showGridLines = False
@@ -201,7 +201,7 @@ if "login_admin_sucesso" not in st.session_state or not st.session_state.login_a
     st.stop()
 
 #=== Título ===#
-st.title("Pagamento Terceirizado")
+st.title("Pagamento Transcrição/Corte")
 st.write("")
 st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
 st.write("")
@@ -219,7 +219,7 @@ excel_data = salvar_excel_com_formatacao(df)
 st.download_button(
     label="Baixar em Excel",
     data=excel_data,
-    file_name="Servicos Prestados.xlsx",
+    file_name="Pagamento_Transcricao_Corte.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 

@@ -134,7 +134,7 @@ if "login_admin_sucesso" not in st.session_state:
     st.session_state.login_admin_sucesso = False
 
 #=== Título ===#
-st.title("Pagamento Terceirizado")
+st.title("Pagamento Transcrição/Corte")
 
 # Formulário de login
 with st.form(key="login"):
