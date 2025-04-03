@@ -212,7 +212,7 @@ if input_buttom_submit:
                         DESCRICAO=DESCRICAO, 
                         PROJETO=PROJETO, 
                         PERIODO=PERIODO, 
-                        HORAS=HORAS_TOTAIS, 
+                        HORAS_TOTAIS=HORAS_TOTAIS, 
                         VALOR=round(VALOR,2), 
                         PAGAMENTO_TOTAL=round(PAGAMENTO_TOTAL,2),
                         TIPO_COLABORADOR=TIPO_COLABORADOR, 
