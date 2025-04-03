@@ -50,7 +50,8 @@ def ler_tabela(project_id, dataset_id, table_id):
 
 # ===== Função para incluir um novo serviço prestado ===== #
 def incluir_servico(project_id, dataset_id, table_id, 
-                    TERCEIRIZADO, SERVICO, DESCRICAO, PROJETO, PERIODO, HORAS, VALOR, TOTAL, QUEM_EMITE, OBSERVACAO):
+                    TERCEIRIZADO, SERVICO, DESCRICAO, PROJETO, PERIODO, HORAS_TOTAIS, VALOR, PAGAMENTO_TOTAL, 
+                    TIPO_COLABORADOR, QUEM_EMITE_A_NF):
     # Inicializa o cliente
     client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
@@ -61,12 +62,12 @@ def incluir_servico(project_id, dataset_id, table_id,
         "DESCRICAO": [DESCRICAO],
         "PROJETO": [PROJETO],
         "PERIODO": [PERIODO],
-        "HORAS": [HORAS],
+        "HORAS_TOTAIS": [HORAS_TOTAIS],
         "VALOR": [VALOR],
-        "TOTAL": [TOTAL],
-        "QUEM EMITE A NF": [QUEM_EMITE],
-        "OBSERVACAO": [OBSERVACAO],
-        "DATA_CRIACAO": [datetime.now()]
+        "PAGAMENTO_TOTAL": [PAGAMENTO_TOTAL],
+        "TIPO_COLABORADOR": [TIPO_COLABORADOR],
+        "QUEM_EMITE_A_NF": [QUEM_EMITE_A_NF],
+        "DATA_CRIACAO": [datetime.now().date()]
     })
 
     # Define a tabela completa
@@ -188,7 +189,7 @@ def salvar_excel_com_formatacao(bd):
         bottom=Side(border_style="thin", color="000000")
     )
 
-    bd["TOTAL"] = pd.to_numeric(bd["TOTAL"], errors="coerce")
+    bd["PAGAMENTO_TOTAL"] = pd.to_numeric(bd["PAGAMENTO_TOTAL"], errors="coerce")
     
     # Escreve os dados no Excel
     for j, row in enumerate(rows):

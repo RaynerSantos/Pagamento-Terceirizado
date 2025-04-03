@@ -174,34 +174,35 @@ with st.form(key="servico"):
     SERVICO = st.selectbox(label="Informe o tipo de serviço prestado", options=["TRANSCRIÇÃO/CORTE"])
     DESCRICAO = st.selectbox(label="Informe a descrição do tipo de serviço prestado", options=["COMPILAÇÃO E FORNECIMENTO DE DADOS"])
     PROJETO = st.selectbox(label="Informe o nome do projeto", options=["1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
-                                                                       "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
-                                                                       "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
-                                                                       "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025",
-                                                                       "1.216-2 CIELO/CP/TRACKING NPS MENSAL 2ª ONDA_2025",
-                                                                       "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
-                                                                       "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
-                                                                       "1.216-5 CIELO/CP/TRACKING NPS MENSAL 5ª ONDA_2025",
-                                                                       "1.216-6 CIELO/CP/TRACKING NPS MENSAL 6ª ONDA_2025",
-                                                                       "1.216-7 CIELO/CP/TRACKING NPS MENSAL 7ª ONDA_2025",
-                                                                       "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
-                                                                       "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"])
-    PERIODO = st.text_input(label="Informe o período no qual o projeto ocorreu", placeholder="17/08/2024 A 16/09/2024")
-    HORAS = st.text_input(label="Informe a quantidade de horas trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
-    VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="15,00")
-    QUEM_EMITE = st.selectbox(label="Informe quem emite a NF", options=["MEI"])
-    # OBSERVACAO = st.text_input(label="Caso outra pessoa emita a NF favor informar ou deixar em branco", 
-    #                            placeholder="LUCAS SANTOS EMITE")
+                                                                    #    "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
+                                                                    #    "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
+                                                                       "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"
+                                                                    #    "1.216-2 CIELO/CP/TRACKING NPS MENSAL 2ª ONDA_2025",
+                                                                    #    "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
+                                                                    #    "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
+                                                                    #    "1.216-5 CIELO/CP/TRACKING NPS MENSAL 5ª ONDA_2025",
+                                                                    #    "1.216-6 CIELO/CP/TRACKING NPS MENSAL 6ª ONDA_2025",
+                                                                    #    "1.216-7 CIELO/CP/TRACKING NPS MENSAL 7ª ONDA_2025",
+                                                                    #    "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
+                                                                    #    "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"
+                                                                       ])
+    PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=["20/03/2025 A 31/03/2025", 
+                                                                                         "01/04/2025 A 24/04/2025"])
+    HORAS_TOTAIS = st.text_input(label="Informe a quantidade de horas trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
+    VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
+    TIPO_COLABORADOR = st.selectbox(label="Tipo de Colaborador", options=["MEI"])
+    QUEM_EMITE_A_NF = st.text_input(label="Informe quem irá emitir a Nota", placeholder="FULANO DA SILVA EMITE")
     input_buttom_submit = st.form_submit_button("Enviar")
 
 if input_buttom_submit:
     # Converte o valor
     try:
         VALOR = float(VALOR.replace(",", "."))
-        only_hour = HORAS.split(":")[0]
-        only_min = HORAS.split(":")[1]
+        only_hour = HORAS_TOTAIS.split(":")[0]
+        only_min = HORAS_TOTAIS.split(":")[1]
         min_para_calculo = int(int(only_min) * 100 / 60)
         total_horas_trabalhadas = float(only_hour + "." + str(min_para_calculo))
-        TOTAL = total_horas_trabalhadas * VALOR
+        PAGAMENTO_TOTAL = total_horas_trabalhadas * VALOR
 
         incluir_servico(project_id="pagamento-terceirizado",
                         dataset_id="pagamento_terceirizado",
@@ -211,11 +212,11 @@ if input_buttom_submit:
                         DESCRICAO=DESCRICAO, 
                         PROJETO=PROJETO, 
                         PERIODO=PERIODO, 
-                        HORAS=HORAS, 
+                        HORAS=HORAS_TOTAIS, 
                         VALOR=round(VALOR,2), 
-                        TOTAL=round(TOTAL,2),
-                        QUEM_EMITE=QUEM_EMITE, 
-                        OBSERVACAO="")
+                        PAGAMENTO_TOTAL=round(PAGAMENTO_TOTAL,2),
+                        TIPO_COLABORADOR=TIPO_COLABORADOR, 
+                        QUEM_EMITE_A_NF=QUEM_EMITE_A_NF)
         st.success("✅ Serviço incluído com sucesso!")
         st.write("Você já pode fechar a página.")
 

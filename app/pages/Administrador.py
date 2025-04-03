@@ -61,7 +61,7 @@ def salvar_excel_com_formatacao(bd):
         bottom=Side(border_style="thin", color="000000")
     )
 
-    bd["TOTAL"] = pd.to_numeric(bd["TOTAL"], errors="coerce")
+    bd["PAGAMENTO_TOTAL"] = pd.to_numeric(bd["PAGAMENTO_TOTAL"], errors="coerce")
     
     # Escreve os dados no Excel
     for j, row in enumerate(rows):
