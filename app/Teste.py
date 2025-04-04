@@ -87,7 +87,7 @@ df = pd.DataFrame({
     "PAGAMENTO_TOTAL": [780.00, 1090.00, 1530.00, 647.00]
 })
 
-recuperar_nome = df.loc[df["LOGIN"] == 'andreia.goncalves', "NOME_COMPLETO"]
+recuperar_nome = df.loc[df["LOGIN"] == 'alice.ribeiro', "NOME_COMPLETO"]
 recuperar_nome = recuperar_nome.iloc[0]
 print(f'\nnome: {recuperar_nome}')
 
