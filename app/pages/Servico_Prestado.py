@@ -130,8 +130,15 @@ df_logins = ler_tabela(project_id="pagamento-terceirizado",
                     dataset_id="pagamento_terceirizado", 
                     table_id="login_colaborador")
 
+PERIODO_1 = "20/03/2025 A 31/03/2025"
+PERIODO_2 = "01/04/2025 A 24/04/2025"
+PERIODO_3 = ""
+
 recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
 recuperar_nome = recuperar_nome.iloc[0]
+
+periodo_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PERIODO"]
+
 recuperar_ult_pagamento = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
 
 
@@ -140,7 +147,9 @@ st.title("Pagamento Transcrição/Corte")
 st.write("")
 st.write(f"Bem-vindo, **{recuperar_nome}**! 😊")
 if not recuperar_ult_pagamento.empty:
-    recuperar_ult_pagamento = round(recuperar_ult_pagamento.iloc[-1], 2)
+    df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & ((df["PERIODO"] == PERIODO_1) | (df["PERIODO"] == PERIODO_2))]
+    recuperar_ult_pagamento = df_usuario_periodo["PAGAMENTO_TOTAL"].sum()
+    # recuperar_ult_pagamento = round(recuperar_ult_pagamento.iloc[-1], 2)
     recuperar_ult_pagamento = str(recuperar_ult_pagamento)
     recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
     st.write(f"Valor a receber no período: **R${recuperar_ult_pagamento}**")
@@ -198,8 +207,7 @@ with st.form(key="servico"):
                                                                     #    "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
                                                                     #    "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"
                                                                        ])
-    PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=["20/03/2025 A 31/03/2025", 
-                                                                                         "01/04/2025 A 24/04/2025"])
+    PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_1, PERIODO_2])
     HORAS_TOTAIS = st.text_input(label="Informe a quantidade TOTAL DE HORAS trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
     VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
     TIPO_COLABORADOR = st.selectbox(label="Tipo de Colaborador", options=["MEI"])
