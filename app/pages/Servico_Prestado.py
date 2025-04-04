@@ -138,7 +138,7 @@ recuperar_ult_pagamento = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PAGAMENT
 #=== Título ===#
 st.title("Pagamento Transcrição/Corte")
 st.write("")
-st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
+st.write(f"Bem-vindo, **{recuperar_nome}**! 😊")
 if not recuperar_ult_pagamento.empty:
     recuperar_ult_pagamento = recuperar_ult_pagamento.iloc[-1]
     recuperar_ult_pagamento = str(recuperar_ult_pagamento)
@@ -219,7 +219,7 @@ if input_buttom_submit:
         incluir_servico(project_id="pagamento-terceirizado",
                         dataset_id="pagamento_terceirizado",
                         table_id="horas_colaborador",
-                        TERCEIRIZADO=TERCEIRIZADO, 
+                        TERCEIRIZADO=recuperar_nome, 
                         SERVICO=SERVICO, 
                         DESCRICAO=DESCRICAO, 
                         PROJETO=PROJETO, 
