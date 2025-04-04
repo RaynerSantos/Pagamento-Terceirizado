@@ -133,7 +133,7 @@ df_logins = ler_tabela(project_id="pagamento-terceirizado",
 recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
 recuperar_nome = recuperar_nome.iloc[0]
 
-recuperar_ult_pagamento = df.loc[df["NOME_COMPLETO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
+recuperar_ult_pagamento = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
 recuperar_ult_pagamento = recuperar_ult_pagamento.iloc[-1]
 
 
