@@ -150,20 +150,20 @@ if st.button("🔒 Alterar minha senha"):
     st.switch_page("pages/Alterar_Senha.py")
 
 
-if not recuperar_nome.empty:
-    recuperar_nome = recuperar_nome.iloc[0]
-    df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
+# if not recuperar_nome.empty:
+    # recuperar_nome = recuperar_nome.iloc[0]
+df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
 
-    # Link para download
-    excel_data = salvar_excel_com_formatacao(df_usuario)
-    st.download_button(
-        label="📥 Lançamentos passados",
-        data=excel_data,
-        file_name="Horas Colaborador.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-else: 
-    st.warning("⚠️ Não foi possível encontrar seu nome completo no banco de dados.")
+# Link para download
+excel_data = salvar_excel_com_formatacao(df_usuario)
+st.download_button(
+    label="📥 Lançamentos passados",
+    data=excel_data,
+    file_name="Horas Colaborador.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+# else: 
+#     st.warning("⚠️ Não foi possível encontrar seu nome completo no banco de dados.")
 
 st.write("")
 st.write("")
