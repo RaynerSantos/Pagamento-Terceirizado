@@ -143,7 +143,7 @@ if not recuperar_ult_pagamento.empty:
     recuperar_ult_pagamento = recuperar_ult_pagamento.iloc[-1]
     recuperar_ult_pagamento = str(recuperar_ult_pagamento)
     recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
-    st.write(f"Pagamento referente as últimas horas lançadas no sistema: **R${recuperar_ult_pagamento}**")
+    st.write(f"Valor a receber no período: **R${recuperar_ult_pagamento}**")
 else: 
     st.write("")
 st.write("")
