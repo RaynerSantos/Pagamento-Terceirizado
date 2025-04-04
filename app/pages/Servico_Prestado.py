@@ -133,9 +133,6 @@ df_logins = ler_tabela(project_id="pagamento-terceirizado",
 recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
 recuperar_nome = recuperar_nome.iloc[0]
 recuperar_ult_pagamento = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
-recuperar_ult_pagamento = str(recuperar_ult_pagamento)
-recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
-
 
 
 #=== Título ===#
@@ -144,6 +141,8 @@ st.write("")
 st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
 if not recuperar_ult_pagamento.empty:
     recuperar_ult_pagamento = recuperar_ult_pagamento.iloc[-1]
+    recuperar_ult_pagamento = str(recuperar_ult_pagamento)
+    recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
     st.write(f"Pagamento referente as últimas horas lançadas no sistema: **R${recuperar_ult_pagamento}**")
 else: 
     st.write("")
