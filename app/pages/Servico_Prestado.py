@@ -140,7 +140,7 @@ st.title("Pagamento Transcrição/Corte")
 st.write("")
 st.write(f"Bem-vindo, **{recuperar_nome}**! 😊")
 if not recuperar_ult_pagamento.empty:
-    recuperar_ult_pagamento = recuperar_ult_pagamento.iloc[-1]
+    recuperar_ult_pagamento = round(recuperar_ult_pagamento.iloc[-1], 2)
     recuperar_ult_pagamento = str(recuperar_ult_pagamento)
     recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
     st.write(f"Valor a receber no período: **R${recuperar_ult_pagamento}**")
