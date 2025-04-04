@@ -148,6 +148,7 @@ st.write("")
 st.write(f"Bem-vindo, **{recuperar_nome}**! 😊")
 if not recuperar_ult_pagamento.empty:
     df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & ((df["PERIODO"] == PERIODO_1) | (df["PERIODO"] == PERIODO_2))]
+    st.dataframe(df_usuario_periodo)
     recuperar_ult_pagamento = df_usuario_periodo["PAGAMENTO_TOTAL"].sum()
     # recuperar_ult_pagamento = round(recuperar_ult_pagamento.iloc[-1], 2)
     recuperar_ult_pagamento = str(recuperar_ult_pagamento)
