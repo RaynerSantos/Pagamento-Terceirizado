@@ -91,9 +91,12 @@ recuperar_nome = df.loc[df["LOGIN"] == 'alice.ribeiro', "NOME_COMPLETO"]
 recuperar_nome = recuperar_nome.iloc[0]
 print(f'\nnome: {recuperar_nome}')
 
-recuperar_pagamento = df.loc[df["NOME_COMPLETO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
-recuperar_pagamento = recuperar_pagamento.iloc[-1]
-print(f'\nrecuperar_pagamento:\n{recuperar_pagamento}')
+recuperar_ult_pagamento = df.loc[df["NOME_COMPLETO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
+recuperar_ult_pagamento = recuperar_ult_pagamento.iloc[-1]
+print(f'\nrecuperar_pagamento:\n{recuperar_ult_pagamento}')
+recuperar_ult_pagamento = str(recuperar_ult_pagamento)
+recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
+print(f'\nrecuperar_pagamento_atualizado:\n{recuperar_ult_pagamento}')
 
 # new_df = df.loc[df["LOGIN"] == 'andreia.goncalves']
 # print(f'\nnew_df\n{new_df}')
