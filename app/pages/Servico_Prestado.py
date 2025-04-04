@@ -200,7 +200,7 @@ with st.form(key="servico"):
                                                                        ])
     PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=["20/03/2025 A 31/03/2025", 
                                                                                          "01/04/2025 A 24/04/2025"])
-    HORAS_TOTAIS = st.text_input(label="Informe a quantidade de horas trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
+    HORAS_TOTAIS = st.text_input(label="Informe a quantidade TOTAL DE HORAS trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
     VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
     TIPO_COLABORADOR = st.selectbox(label="Tipo de Colaborador", options=["MEI"])
     QUEM_EMITE_A_NF = st.text_input(label="Informe quem irá emitir a Nota", placeholder="FULANO DA SILVA")
