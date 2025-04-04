@@ -83,15 +83,20 @@ print(f'TOTAL:\t{TOTAL}')
 df = pd.DataFrame({
     "LOGIN": ['andreia.goncalves', 'alice.ribeiro', 'joao.silva', 'andreia.goncalves'],
     "SENHA": ['123', '123', '123', '123'],
-    "NOME_COMPLETO": ['ANDREIA GONCALVES', 'ALICE RIBEIRO', 'JOAO SILVA', 'ANDREIA GONCALVES']
+    "NOME_COMPLETO": ['ANDREIA GONCALVES', 'ALICE RIBEIRO', 'JOAO SILVA', 'ANDREIA GONCALVES'],
+    "PAGAMENTO_TOTAL": [780.00, 1090.00, 1530.00, 647.00]
 })
 
 recuperar_nome = df.loc[df["LOGIN"] == 'andreia.goncalves', "NOME_COMPLETO"]
+recuperar_nome = recuperar_nome.iloc[0]
 print(f'\nnome: {recuperar_nome}')
 
-new_df = df.loc[df["LOGIN"] == 'andreia.goncalves']
-print(f'\nnew_df\n{new_df}')
+recuperar_pagamento = df.loc[df["NOME_COMPLETO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
+recuperar_pagamento = recuperar_pagamento.iloc[-1]
+print(f'\nrecuperar_pagamento:\n{recuperar_pagamento}')
 
-from datetime import datetime 
+# new_df = df.loc[df["LOGIN"] == 'andreia.goncalves']
+# print(f'\nnew_df\n{new_df}')
 
-print(datetime.now().date())
+# from datetime import datetime 
+# print(datetime.now().date())

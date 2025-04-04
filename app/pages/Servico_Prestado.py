@@ -123,22 +123,30 @@ if "login_sucesso" not in st.session_state or not st.session_state.login_sucesso
     st.warning("❌ Você precisa fazer login!")
     st.stop()
 
-#=== Título ===#
-st.title("Pagamento Transcrição/Corte")
-st.write("")
-st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
-st.write("")
-if st.button("🔒 Alterar minha senha"):
-    st.switch_page("pages/Alterar_Senha.py")
-
-
 df = ler_tabela(project_id="pagamento-terceirizado", 
                 dataset_id="pagamento_terceirizado", 
                 table_id="horas_colaborador")
 df_logins = ler_tabela(project_id="pagamento-terceirizado", 
                     dataset_id="pagamento_terceirizado", 
                     table_id="login_colaborador")
+
 recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
+recuperar_nome = recuperar_nome.iloc[0]
+
+recuperar_ult_pagamento = df.loc[df["NOME_COMPLETO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
+recuperar_ult_pagamento = recuperar_ult_pagamento.iloc[-1]
+
+
+#=== Título ===#
+st.title("Pagamento Transcrição/Corte")
+st.write("")
+st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
+st.write(f"Pagamento referente as últimas horas lançadas no sistema: **R${recuperar_ult_pagamento}**")
+st.write("")
+if st.button("🔒 Alterar minha senha"):
+    st.switch_page("pages/Alterar_Senha.py")
+
+
 if not recuperar_nome.empty:
     recuperar_nome = recuperar_nome.iloc[0]
     df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
@@ -191,7 +199,7 @@ with st.form(key="servico"):
     HORAS_TOTAIS = st.text_input(label="Informe a quantidade de horas trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
     VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
     TIPO_COLABORADOR = st.selectbox(label="Tipo de Colaborador", options=["MEI"])
-    QUEM_EMITE_A_NF = st.text_input(label="Informe quem irá emitir a Nota", placeholder="FULANO DA SILVA EMITE")
+    QUEM_EMITE_A_NF = st.text_input(label="Informe quem irá emitir a Nota", placeholder="FULANO DA SILVA")
     input_buttom_submit = st.form_submit_button("Enviar")
 
 if input_buttom_submit:
