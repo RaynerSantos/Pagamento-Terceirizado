@@ -152,9 +152,9 @@ if not recuperar_ult_pagamento.empty:
     # recuperar_ult_pagamento = round(recuperar_ult_pagamento.iloc[-1], 2)
     recuperar_ult_pagamento = str(recuperar_ult_pagamento)
     recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
-    st.write(f"Valor a receber no período {periodo_usuario}:  **R${recuperar_ult_pagamento}**")
+    st.write(f"Valor a receber no período de {periodo_usuario}:  **R${recuperar_ult_pagamento}**")
 else: 
-    st.write(f"Valor a receber no período {PERIODO_1}:  **R$0,00**")
+    st.write(f"Valor a receber no período de {PERIODO_1}:  **R$0,00**")
 st.write("")
 if st.button("🔒 Alterar minha senha"):
     st.switch_page("pages/Alterar_Senha.py")
