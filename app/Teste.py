@@ -93,9 +93,10 @@ recuperar_nome = df.loc[df["LOGIN"] == 'andreia.goncalves', "NOME_COMPLETO"]
 print(f'\nnome:\n{recuperar_nome}')
 
 periodo_usuario = df.loc[df["LOGIN"] == 'andreia.goncalves', "PERIODO"]
+periodo_usuario = periodo_usuario.iloc[-1]
 print(f'\nperiodo_usuario:\n{periodo_usuario}')
 
-df_usuario = df.loc[(df["LOGIN"] == 'andreia.goncalves') & ((df["PERIODO"] == "20/03/2025 A 31/03/2025") | (df["PERIODO"] == "01/04/2025 A 24/04/2025"))]
+df_usuario = df.loc[(df["LOGIN"] == 'andreia.goncalves') & (df["PERIODO"] == periodo_usuario)]
 print(f'\n{df_usuario}')
 
 recuperar_ult_pagamento = df_usuario["PAGAMENTO_TOTAL"].sum()
@@ -111,5 +112,5 @@ print(f'\nrecuperar_pagamento_atualizado:\n{recuperar_ult_pagamento}')
 # new_df = df.loc[df["LOGIN"] == 'andreia.goncalves']
 # print(f'\nnew_df\n{new_df}')
 
-# from datetime import datetime 
-# print(datetime.now().date())
+from datetime import datetime 
+print(datetime.now().date())

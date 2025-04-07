@@ -132,7 +132,6 @@ df_logins = ler_tabela(project_id="pagamento-terceirizado",
 
 PERIODO_1 = "20/03/2025 A 31/03/2025"
 PERIODO_2 = "01/04/2025 A 24/04/2025"
-PERIODO_3 = ""
 
 recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
 recuperar_nome = recuperar_nome.iloc[0]
@@ -147,14 +146,15 @@ st.title("Pagamento Transcrição/Corte")
 st.write("")
 st.write(f"Bem-vindo, **{recuperar_nome}**! 😊")
 if not recuperar_ult_pagamento.empty:
-    df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & ((df["PERIODO"] == PERIODO_1) | (df["PERIODO"] == PERIODO_2))]
+    periodo_usuario = periodo_usuario.iloc[-1]
+    df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
     recuperar_ult_pagamento = df_usuario_periodo["PAGAMENTO_TOTAL"].sum()
     # recuperar_ult_pagamento = round(recuperar_ult_pagamento.iloc[-1], 2)
     recuperar_ult_pagamento = str(recuperar_ult_pagamento)
     recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
-    st.write(f"Valor a receber no período: **R${recuperar_ult_pagamento}**")
+    st.write(f"Valor a receber no período {periodo_usuario}: **R${recuperar_ult_pagamento}**")
 else: 
-    st.write("")
+    st.write(f"Valor a receber no período {PERIODO_1}")
 st.write("")
 if st.button("🔒 Alterar minha senha"):
     st.switch_page("pages/Alterar_Senha.py")

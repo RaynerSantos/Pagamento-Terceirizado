@@ -67,7 +67,7 @@ def incluir_servico(project_id, dataset_id, table_id,
         "PAGAMENTO_TOTAL": [PAGAMENTO_TOTAL],
         "TIPO_COLABORADOR": [TIPO_COLABORADOR],
         "QUEM_EMITE_A_NF": [QUEM_EMITE_A_NF],
-        "DATA_CRIACAO": [datetime.now().date()]
+        "DATA_CRIACAO": [datetime.now()]
     })
 
     # Define a tabela completa
