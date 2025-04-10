@@ -164,7 +164,7 @@ if st.button("🔒 Alterar minha senha"):
 # Link para download
 excel_data = salvar_excel_com_formatacao(df_usuario_periodo)
 st.download_button(
-    label="📥 Baixar Excel",
+    label="📥 Baixar em Excel",
     data=excel_data,
     file_name="Horas Colaborador.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -238,7 +238,7 @@ if input_buttom_submit:
         st.write("Você já pode fechar a página.")
 
     except ValueError:
-        st.error("❌ Valor da hora inválido. Use vírgula como separador decimal (Ex.: 15,00).")
+        st.error("❌ Valor total da hora inválido. Use vírgula como separador decimal (Ex.: 15,00).")
 
 st.write("")
 st.write("")
