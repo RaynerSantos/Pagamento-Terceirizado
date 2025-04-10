@@ -153,16 +153,14 @@ if not recuperar_ult_pagamento.empty:
     recuperar_ult_pagamento = str(recuperar_ult_pagamento)
     recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
     st.write(f"Valor a receber no período de *{periodo_usuario}*:  **R${recuperar_ult_pagamento}**")
+    df_usuario = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
 else: 
     st.write(f"Valor a receber no período de *{PERIODO_1}*:  **R$0,00**")
+    df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
+
 st.write("")
 if st.button("🔒 Alterar minha senha"):
     st.switch_page("pages/Alterar_Senha.py")
-
-
-# if not recuperar_nome.empty:
-    # recuperar_nome = recuperar_nome.iloc[0]
-df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
 
 # Link para download
 excel_data = salvar_excel_com_formatacao(df_usuario)
