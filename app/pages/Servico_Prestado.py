@@ -167,7 +167,7 @@ df_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
 # Link para download
 excel_data = salvar_excel_com_formatacao(df_usuario)
 st.download_button(
-    label="📥 Lançamentos passados",
+    label="📥 Baixar Excel",
     data=excel_data,
     file_name="Horas Colaborador.xlsx",
     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
