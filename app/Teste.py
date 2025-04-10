@@ -99,15 +99,9 @@ print(f'\nperiodo_usuario:\n{periodo_usuario}')
 df_usuario = df.loc[(df["LOGIN"] == 'andreia.goncalves') & (df["PERIODO"] == periodo_usuario)]
 print(f'\n{df_usuario}')
 
-recuperar_ult_pagamento = df_usuario["PAGAMENTO_TOTAL"].sum()
-print(f'\nrecuperar_pagamento_atualizado:\n{recuperar_ult_pagamento}')
-
-# recuperar_ult_pagamento = df.loc[df["NOME_COMPLETO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
-# recuperar_ult_pagamento = round(float(recuperar_ult_pagamento.iloc[-1]), 2)
-# print(f'\nrecuperar_pagamento:\n{recuperar_ult_pagamento}')
-# recuperar_ult_pagamento = str(recuperar_ult_pagamento)
-# recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
+# recuperar_ult_pagamento = df_usuario["PAGAMENTO_TOTAL"].sum()
 # print(f'\nrecuperar_pagamento_atualizado:\n{recuperar_ult_pagamento}')
+
 
 # new_df = df.loc[df["LOGIN"] == 'andreia.goncalves']
 # print(f'\nnew_df\n{new_df}')
