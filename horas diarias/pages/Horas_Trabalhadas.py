@@ -6,7 +6,7 @@ import streamlit as st
 import json
 from google.oauth2 import service_account
 from datetime import datetime
-from Funcoes import ler_tabela, incluir_horas
+from Funcoes import ler_tabela, incluir_horas, salvar_excel_com_formatacao
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
@@ -118,6 +118,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+PROJETO_ATUAL = "1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025"
+
 #=== Título ===#
 st.title("Lançamento de horas")
 st.write("")
@@ -154,7 +156,15 @@ with st.form(key="hora_diaria"):
                                                                                      "28/03/2025", "29/03/2025", "30/03/2025", "31/03/2025"])
     QTD_HORAS = st.text_input(label="Informe a quantidade de horas trabalhadas")
     st.write("")
-    st.write("Informe os dados bancários abaixo")
+    st.markdown(
+    """
+    <h5 style="color: white; text-align: center;">
+        Informe os dados bancários abaixo
+    </h5>
+    """,
+    unsafe_allow_html=True
+)
+    # st.write("Informe os dados bancários abaixo")
     BANCO = st.text_input(label="Informe o Banco que deseja receber o pagamento")
     AGENCIA = st.text_input(label="Informe a agência")
     CONTA = st.text_input(label="Informe o número da conta")
@@ -188,7 +198,7 @@ if input_buttom_submit:
                       CONTA=CONTA,
                       TIPO_PIX=TIPO_PIX,
                       CHAVE_PIX=CHAVE_PIX)
-        st.success("✅ Serviço incluído com sucesso!")
+        st.success("✅ Horas trabalhadas incluída com sucesso!")
 
     except ValueError:
         st.error("❌ Valor da hora inválido. Por favor, insira um número válido.")
@@ -196,11 +206,31 @@ if input_buttom_submit:
 st.write("")
 st.write("")
 
+df_logins = ler_tabela(project_id="pagamento-terceirizado",  
+                       dataset_id="pagamento_terceirizado", 
+                       table_id="login_colaborador")
 df = ler_tabela(project_id="pagamento-terceirizado", 
                 dataset_id="pagamento_terceirizado", 
                 table_id="horas_diaria_colaborador")
-st.dataframe(df, hide_index=True)
 
+recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
+
+if not recuperar_nome.empty:
+    recuperar_nome = recuperar_nome.iloc[0]
+    df_usuario = df.loc[(df["NOME_COMPLETO"] == recuperar_nome) & (df["PROJETO"] == PROJETO_ATUAL)]
+    st.dataframe(df_usuario, hide_index=True)
+
+# Link para download
+excel_data = salvar_excel_com_formatacao(df_usuario)
+st.download_button(
+    label="📥 Baixar em Excel",
+    data=excel_data,
+    file_name="Horas Colaborador.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+st.write("")
+st.write("")
 st.write("")
 st.write("")
 if st.button("🔄 Recarregar página"):
