@@ -232,7 +232,6 @@ st.download_button(
 st.write("")
 st.write("")
 st.write("")
-st.write("")
 if st.button("🔄 Recarregar página"):
     st.rerun()
 
