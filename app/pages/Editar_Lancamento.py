@@ -180,12 +180,12 @@ if "LOGIN" in st.session_state:
         if input_buttom_submit:
             # Converte o valor
             try:
-                VALOR = float(st.session_state.VALOR.replace(",", "."))
-                only_hour = st.session_state.HORAS_TOTAIS.split(":")[0]
-                only_min = st.session_state.HORAS_TOTAIS.split(":")[1]
+                NOVO_VALOR = float(NOVO_VALOR(",", "."))
+                only_hour = NOVAS_HORAS_TOTAIS.split(":")[0]
+                only_min = NOVAS_HORAS_TOTAIS.split(":")[1]
                 min_para_calculo = int(int(only_min) * 100 / 60)
                 total_horas_trabalhadas = float(only_hour + "." + str(min_para_calculo))
-                PAGAMENTO_TOTAL = total_horas_trabalhadas * VALOR
+                PAGAMENTO_TOTAL = total_horas_trabalhadas * NOVO_VALOR
 
                 st.write("")
                 st.write("")
