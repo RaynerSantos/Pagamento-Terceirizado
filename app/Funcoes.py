@@ -178,6 +178,47 @@ def excluir_lancamento_sql(project_id, dataset_id, table_id, LOGIN, periodo, df_
 
 
 
+def atualizar_lancamento_sql(project_id, dataset_id, table_id,
+                              LOGIN, periodo_antigo,
+                              novo_projeto, novo_periodo, novas_horas, novo_valor,
+                              df_logins):
+    # Conecta ao BigQuery
+    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+
+    # Recupera o nome completo a partir do login
+    recuperar_nome = df_logins.loc[df_logins["LOGIN"] == LOGIN, "NOME_COMPLETO"].iloc[0]
+
+    # Cria a query UPDATE
+    query = f"""
+        UPDATE `{project_id}.{dataset_id}.{table_id}`
+        SET 
+            PROJETO = @novo_projeto,
+            PERIODO = @novo_periodo,
+            HORAS_TOTAIS = @novas_horas,
+            VALOR = @novo_valor
+        WHERE TERCEIRIZADO = @terceirizado AND PERIODO = @periodo_antigo
+    """
+
+    # Configura os parâmetros
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("novo_projeto", "STRING", novo_projeto),
+            bigquery.ScalarQueryParameter("novo_periodo", "STRING", novo_periodo),
+            bigquery.ScalarQueryParameter("novas_horas", "STRING", novas_horas),
+            bigquery.ScalarQueryParameter("novo_valor", "FLOAT64", novo_valor),
+            bigquery.ScalarQueryParameter("terceirizado", "STRING", recuperar_nome),
+            bigquery.ScalarQueryParameter("periodo_antigo", "STRING", periodo_antigo),
+        ]
+    )
+
+    # Executa a query
+    query_job = client.query(query, job_config=job_config)
+    query_job.result()
+
+    print(f"Lançamento de {recuperar_nome} atualizado com sucesso!")
+
+
+
 # Função para salvar a tabela em um único Excel com formatação
 def salvar_excel_com_formatacao(bd):
     output = BytesIO()

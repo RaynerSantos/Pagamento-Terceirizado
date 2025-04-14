@@ -135,7 +135,6 @@ PERIODO_2 = "01/04/2025 A 24/04/2025"
 
 recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
 recuperar_nome = recuperar_nome.iloc[0]
-
 periodo_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PERIODO"]
 
 recuperar_ult_pagamento = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PAGAMENTO_TOTAL"]
@@ -172,8 +171,8 @@ st.download_button(
 # else: 
 #     st.warning("⚠️ Não foi possível encontrar seu nome completo no banco de dados.")
 
-# if st.button("🗑️ Excluir lançamento"):
-#     st.switch_page("pages/Excluir_Lancamento.py")
+if st.button("🗑️ Excluir lançamento"):
+    st.switch_page("pages/Excluir_Lancamento.py")
 
 if st.button("✏️ Editar lançamento"):
     st.switch_page("pages/Editar_Lancamento.py")
