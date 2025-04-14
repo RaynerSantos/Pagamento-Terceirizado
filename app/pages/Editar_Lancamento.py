@@ -148,12 +148,12 @@ if "LOGIN" in st.session_state:
         st.write("")
         st.write("")
 
-        st.write(f"📌 Nome:\t**{df_usuario_periodo.iloc[-1, "TERCEIRIZADO"]}**")
-        st.write(f"📌 Projeto:\t**{df_usuario_periodo.iloc[-1, "PROJETO"]}**")
-        st.write(f"📌 Período:\t**{df_usuario_periodo.iloc[-1, "PERIODO"]}**")
-        st.write(f"📌 Horas totais trabalhadas:\t**{df_usuario_periodo.iloc[-1, "HORAS_TOTAIS"]}**")
-        st.write(f"📌 Valor da hora:\t**R${df_usuario_periodo.iloc[-1, "VALOR"]}**")
-        st.write(f"📌 Valor total a receber pelo período:\t**R${df_usuario_periodo.iloc[-1, "PAGAMENTO_TOTAL"]}**")
+        st.write(f"📌 Nome:\t**{df_usuario_periodo["TERCEIRIZADO"].values}**")
+        st.write(f"📌 Projeto:\t**{df_usuario_periodo["PROJETO"].values}**")
+        st.write(f"📌 Período:\t**{df_usuario_periodo["PERIODO"].values}**")
+        st.write(f"📌 Horas totais trabalhadas:\t**{df_usuario_periodo["HORAS_TOTAIS"].values}**")
+        st.write(f"📌 Valor da hora:\t**R${df_usuario_periodo["VALOR"].values}**")
+        st.write(f"📌 Valor total a receber pelo período:\t**R${df_usuario_periodo["PAGAMENTO_TOTAL"].values}**")
         st.write("")
         st.write("")
 
