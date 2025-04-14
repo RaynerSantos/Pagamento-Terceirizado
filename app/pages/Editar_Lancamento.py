@@ -148,6 +148,15 @@ if "LOGIN" in st.session_state:
         st.write("")
         st.write("")
 
+        st.write(f"📌 Nome:\t**{df_usuario_periodo.iloc[-1, "TERCEIRIZADO"]}**")
+        st.write(f"📌 Projeto:\t**{df_usuario_periodo.iloc[-1, "PROJETO"]}**")
+        st.write(f"📌 Período:\t**{df_usuario_periodo.iloc[-1, "PERIODO"]}**")
+        st.write(f"📌 Horas totais trabalhadas:\t**{df_usuario_periodo.iloc[-1, "HORAS_TOTAIS"]}**")
+        st.write(f"📌 Valor da hora:\t**R${df_usuario_periodo.iloc[-1, "VALOR"]}**")
+        st.write(f"📌 Valor total a receber pelo período:\t**R${df_usuario_periodo.iloc[-1, "PAGAMENTO_TOTAL"]}**")
+        st.write("")
+        st.write("")
+
         st.markdown(
                     """
                     <h5 style="color: white; text-align: center;">
@@ -198,6 +207,7 @@ if "LOGIN" in st.session_state:
                                          novo_periodo=NOVO_PERIODO,
                                          novas_horas=NOVAS_HORAS_TOTAIS,
                                          novo_valor=NOVO_VALOR,
+                                         pagamento_total=PAGAMENTO_TOTAL,
                                          df_logins=df_logins
                                         )
                 st.success("✅ Alteração realizada com sucesso!")

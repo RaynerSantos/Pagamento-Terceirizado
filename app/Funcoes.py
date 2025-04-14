@@ -180,7 +180,7 @@ def excluir_lancamento_sql(project_id, dataset_id, table_id, LOGIN, periodo, df_
 
 def atualizar_lancamento_sql(project_id, dataset_id, table_id,
                               LOGIN, periodo_antigo,
-                              novo_projeto, novo_periodo, novas_horas, novo_valor,
+                              novo_projeto, novo_periodo, novas_horas, novo_valor, pagamento_total,
                               df_logins):
     # Conecta ao BigQuery
     client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
@@ -195,7 +195,8 @@ def atualizar_lancamento_sql(project_id, dataset_id, table_id,
             PROJETO = @novo_projeto,
             PERIODO = @novo_periodo,
             HORAS_TOTAIS = @novas_horas,
-            VALOR = @novo_valor
+            VALOR = @novo_valor,
+            PAGAMENTO_TOTAL = @pagamento_total
         WHERE TERCEIRIZADO = @terceirizado AND PERIODO = @periodo_antigo
     """
 
@@ -206,6 +207,7 @@ def atualizar_lancamento_sql(project_id, dataset_id, table_id,
             bigquery.ScalarQueryParameter("novo_periodo", "STRING", novo_periodo),
             bigquery.ScalarQueryParameter("novas_horas", "STRING", novas_horas),
             bigquery.ScalarQueryParameter("novo_valor", "FLOAT64", novo_valor),
+            bigquery.ScalarQueryParameter("pagamento_total", "FLOAT64", pagamento_total),
             bigquery.ScalarQueryParameter("terceirizado", "STRING", recuperar_nome),
             bigquery.ScalarQueryParameter("periodo_antigo", "STRING", periodo_antigo),
         ]
