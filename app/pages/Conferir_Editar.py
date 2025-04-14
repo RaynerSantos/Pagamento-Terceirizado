@@ -142,8 +142,16 @@ if "LOGIN" in st.session_state:
         st.write(f"📌 Valor total a receber pelo período:\t**R${PAGAMENTO_TOTAL}**")
 
         st.write("")
-        st.write("Se as informações estão OK, clique em \"**Realizar lançamento**\" abaixo")
-        if st.button("✅ Realizar lançamento"):
+        # st.write("Se as informações estão OK, clique em \"**Realizar lançamento**\" abaixo, caso contrário volte a página de serviços")
+        st.markdown(
+                    """
+                    <h5 style="color: white; text-align: center;">
+                        🔍 Se as informações estão OK, clique em \"**Realizar lançamento**\", caso contrário volte a página de serviços.
+                    </h5>
+                    """,
+                    unsafe_allow_html=True
+                )
+        if st.button("✔️ Realizar lançamento"):
             incluir_servico(project_id="pagamento-terceirizado",
                             dataset_id="pagamento_terceirizado",
                             table_id="horas_colaborador",
