@@ -142,7 +142,7 @@ if "LOGIN" in st.session_state:
         st.write(f"📌 Valor total a receber pelo período:\t**R${PAGAMENTO_TOTAL}**")
 
         st.write("")
-        st.write("Se as informações estão OK, clique em **Realizar lançamento** abaixo")
+        st.write("Se as informações estão OK, clique em \"**Realizar lançamento**\" abaixo")
         if st.button("✅ Realizar lançamento"):
             incluir_servico(project_id="pagamento-terceirizado",
                             dataset_id="pagamento_terceirizado",
