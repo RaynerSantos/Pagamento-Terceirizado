@@ -142,11 +142,12 @@ if "LOGIN" in st.session_state:
         st.write(f"📌 Valor total a receber pelo período:\t**R${PAGAMENTO_TOTAL}**")
 
         st.write("")
+        st.write("")
         # st.write("Se as informações estão OK, clique em \"**Realizar lançamento**\" abaixo, caso contrário volte a página de serviços")
         st.markdown(
                     """
                     <h5 style="color: white; text-align: center;">
-                        🔍 Se as informações estão OK, clique em \"**Realizar lançamento**\", caso contrário volte a página de serviços.
+                        🔍 Se as informações estão OK, clique em \"<b>Realizar lançamento</b>\", caso contrário volte a página de serviços.
                     </h5>
                     """,
                     unsafe_allow_html=True
