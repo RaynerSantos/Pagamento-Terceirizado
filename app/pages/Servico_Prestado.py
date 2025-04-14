@@ -3,7 +3,7 @@ from google.cloud import bigquery
 import pandas as pd
 import numpy as np
 import streamlit as st
-from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login, salvar_excel_com_formatacao
+from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login, salvar_excel_com_formatacao, excluir_lancamento_sql
 import json
 from google.oauth2 import service_account
 from datetime import datetime
@@ -171,6 +171,9 @@ st.download_button(
     )
 # else: 
 #     st.warning("⚠️ Não foi possível encontrar seu nome completo no banco de dados.")
+
+if st.button("🗑️ Excluir lançamento"):
+    st.switch_page("pages/Excluir_Lancamento.py")
 
 st.write("")
 st.write("")

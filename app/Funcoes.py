@@ -148,6 +148,36 @@ def apagar_tabela(project_id, dataset_id, table_id):
     return
 
 
+
+def excluir_lancamento_sql(project_id, dataset_id, table_id, LOGIN, periodo, df_logins):
+    # client = bigquery.Client(project=project_id)
+    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+
+    # Recupera o nome completo baseado no login
+    recuperar_nome = df_logins.loc[df_logins["LOGIN"] == LOGIN, "NOME_COMPLETO"].iloc[0]
+
+    # Cria a query DELETE
+    query = f"""
+        DELETE FROM `{project_id}.{dataset_id}.{table_id}`
+        WHERE TERCEIRIZADO = @terceirizado AND PERIODO = @periodo
+    """
+
+    # Configura os parâmetros
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("terceirizado", "STRING", recuperar_nome),
+            bigquery.ScalarQueryParameter("periodo", "STRING", periodo),
+        ]
+    )
+
+    # Executa a query
+    query_job = client.query(query, job_config=job_config)
+    query_job.result()
+
+    print(f"Lançamento de {recuperar_nome} no período {periodo} foi excluído com sucesso (via SQL).")
+
+
+
 # Função para salvar a tabela em um único Excel com formatação
 def salvar_excel_com_formatacao(bd):
     output = BytesIO()
