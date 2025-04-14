@@ -143,10 +143,10 @@ if "LOGIN" in st.session_state:
         periodo_usuario = periodo_usuario.iloc[-1]
         df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
 
-        st.write("📋 Informações do último lançamento realizado")
-        st.dataframe(df_usuario_periodo[["TERCEIRIZADO","PROJETO","PERIODO","HORAS_TOTAIS","VALOR","PAGAMENTO_TOTAL"]], hide_index=True)
-        st.write("")
-        st.write("")
+        # st.write("📋 Informações do último lançamento realizado")
+        # st.dataframe(df_usuario_periodo[["TERCEIRIZADO","PROJETO","PERIODO","HORAS_TOTAIS","VALOR","PAGAMENTO_TOTAL"]], hide_index=True)
+        # st.write("")
+        # st.write("")
 
         st.write(f"📌 Nome:\t**{df_usuario_periodo["TERCEIRIZADO"].iloc[0]}**")
         st.write(f"📌 Projeto:\t**{df_usuario_periodo["PROJETO"].iloc[0]}**")
@@ -154,6 +154,7 @@ if "LOGIN" in st.session_state:
         st.write(f"📌 Horas totais trabalhadas:\t**{df_usuario_periodo["HORAS_TOTAIS"].iloc[0]}**")
         st.write(f"📌 Valor da hora:\t**R${round(df_usuario_periodo['VALOR'].iloc[0], 2)}**")
         st.write(f"📌 Valor total a receber pelo período:\t**R${round(df_usuario_periodo["PAGAMENTO_TOTAL"].iloc[0], 2)}**")
+        st.write("")
         st.write("")
         st.write("")
 
