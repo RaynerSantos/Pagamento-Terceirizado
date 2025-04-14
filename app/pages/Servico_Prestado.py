@@ -215,34 +215,20 @@ with st.form(key="servico"):
     input_buttom_submit = st.form_submit_button("Enviar")
 
 if input_buttom_submit:
-    # Converte o valor
-    try:
-        VALOR = float(VALOR.replace(",", "."))
-        only_hour = HORAS_TOTAIS.split(":")[0]
-        only_min = HORAS_TOTAIS.split(":")[1]
-        min_para_calculo = int(int(only_min) * 100 / 60)
-        total_horas_trabalhadas = float(only_hour + "." + str(min_para_calculo))
-        PAGAMENTO_TOTAL = total_horas_trabalhadas * VALOR
+    st.session_state.TERCEIRIZADO = TERCEIRIZADO
+    st.session_state.SERVICO = SERVICO
+    st.session_state.DESCRICAO = DESCRICAO
+    st.session_state.PROJETO = PROJETO
+    st.session_state.PERIODO = PERIODO
+    st.session_state.HORAS_TOTAIS = HORAS_TOTAIS
+    st.session_state.VALOR = VALOR
+    st.session_state.TIPO_COLABORADOR = TIPO_COLABORADOR
+    st.session_state.QUEM_EMITE_A_NF = QUEM_EMITE_A_NF
+    st.session_state.recuperar_nome = recuperar_nome
 
-        incluir_servico(project_id="pagamento-terceirizado",
-                        dataset_id="pagamento_terceirizado",
-                        table_id="horas_colaborador",
-                        TERCEIRIZADO=recuperar_nome, 
-                        SERVICO=SERVICO, 
-                        DESCRICAO=DESCRICAO, 
-                        PROJETO=PROJETO, 
-                        PERIODO=PERIODO, 
-                        HORAS_TOTAIS=HORAS_TOTAIS, 
-                        VALOR=round(VALOR,2), 
-                        PAGAMENTO_TOTAL=round(PAGAMENTO_TOTAL,2),
-                        TIPO_COLABORADOR=TIPO_COLABORADOR, 
-                        QUEM_EMITE_A_NF=QUEM_EMITE_A_NF)
-        st.success("✅ Serviço incluído com sucesso!")
-        st.write("Você já pode fechar a página.")
+    st.switch_page("pages/Conferir_Editar.py")
 
-    except ValueError:
-        st.error("❌ Valor total da hora inválido. Use vírgula como separador decimal (Ex.: 15,00).")
-
+   
 st.write("")
 st.write("")
 if st.button("🔄 Recarregar página"):

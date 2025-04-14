@@ -118,46 +118,55 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("🗑️ Excluir Lançamento")
+st.title("🔍 Conferir e Editar")  # "🔍 Conferir informações a serem registradas"
 st.write("")
 st.write("")
-
-df = ler_tabela(project_id="pagamento-terceirizado", 
-                dataset_id="pagamento_terceirizado", 
-                table_id="horas_colaborador")
-df_logins = ler_tabela(project_id="pagamento-terceirizado", 
-                    dataset_id="pagamento_terceirizado", 
-                    table_id="login_colaborador")
-
-recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
-recuperar_nome = recuperar_nome.iloc[0]
-
-periodo_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PERIODO"]
 
 # Verifica se o usuário está logado
 if "LOGIN" in st.session_state:
-    if not periodo_usuario.empty:
-        periodo_usuario = periodo_usuario.iloc[-1]
-        st.write(f"Você tem certeza que deseja excluir o lançamento do período: {periodo_usuario} ?")
-        if st.button("🗑️ Excluir Lançamento"):
-            excluir_lancamento_sql(project_id="pagamento-terceirizado",
-                                   dataset_id="pagamento_terceirizado",
-                                   table_id="horas_colaborador",
-                                   LOGIN=st.session_state.LOGIN,
-                                   periodo=periodo_usuario,
-                                   df_logins=df_logins)
-            st.success(f"✅ lançamento do período {periodo_usuario} excluído com sucesso!")
 
-    else:
-        st.write("❌ Não há nenhum período com lançamento registrado!")
+    # Converte o valor
+    try:
+        VALOR = float(st.session_state.VALOR.replace(",", "."))
+        only_hour = st.session_state.HORAS_TOTAIS.split(":")[0]
+        only_min = st.session_state.HORAS_TOTAIS.split(":")[1]
+        min_para_calculo = int(int(only_min) * 100 / 60)
+        total_horas_trabalhadas = float(only_hour + "." + str(min_para_calculo))
+        PAGAMENTO_TOTAL = total_horas_trabalhadas * VALOR
 
+        st.write(f"📌 Nome: **{st.session_state.recuperar_nome}**")
+        st.write(f"📌 Projeto: **{st.session_state.PROJETO}**")
+        st.write(f"📌 Período: **{st.session_state.PERIODO}**")
+        st.write(f"📌 Horas totais trabalhadas: **{st.session_state.HORAS_TOTAIS}**")
+        st.write(f"📌 Valor da hora: **R${st.session_state.VALOR}**")
+        st.write(f"📌 Valor total a receber pelo período: **R${PAGAMENTO_TOTAL}**")
+
+        if st.button("✅ Realizar lançamento"):
+            incluir_servico(project_id="pagamento-terceirizado",
+                            dataset_id="pagamento_terceirizado",
+                            table_id="horas_colaborador",
+                            TERCEIRIZADO=st.session_state.recuperar_nome, 
+                            SERVICO=st.session_state.SERVICO, 
+                            DESCRICAO=st.session_state.DESCRICAO, 
+                            PROJETO=st.session_state.PROJETO, 
+                            PERIODO=st.session_state.PERIODO, 
+                            HORAS_TOTAIS=st.session_state.HORAS_TOTAIS, 
+                            VALOR=round(VALOR,2), 
+                            PAGAMENTO_TOTAL=round(PAGAMENTO_TOTAL,2),
+                            TIPO_COLABORADOR=st.session_state.TIPO_COLABORADOR, 
+                            QUEM_EMITE_A_NF=st.session_state.QUEM_EMITE_A_NF)
+            st.success("✅ Serviço incluído com sucesso!")
+            st.write("Você já pode fechar a página ou retornar para a página de serviços.")
+
+    except ValueError:
+        st.error("❌ Valor total da hora inválido. Use vírgula como separador decimal (Ex.: 17,00).")
+
+    st.write("")
+    st.write("")
+    st.write("")
     
-    st.write("")
-    st.write("")
-    st.write("")
-
     # Botão para voltar à página principal
     if st.button("🔙 Voltar para a página de serviços"):
         st.switch_page("pages/Servico_Prestado.py")
 else:
-    st.warning("⚠️ Você precisa estar logado para excluir lançamentos.")
+    st.warning("⚠️ Você precisa estar logado!")
