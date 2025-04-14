@@ -134,12 +134,12 @@ if "LOGIN" in st.session_state:
         total_horas_trabalhadas = float(only_hour + "." + str(min_para_calculo))
         PAGAMENTO_TOTAL = total_horas_trabalhadas * VALOR
 
-        st.write(f"📌 Nome: **{st.session_state.recuperar_nome}**")
-        st.write(f"📌 Projeto: **{st.session_state.PROJETO}**")
-        st.write(f"📌 Período: **{st.session_state.PERIODO}**")
-        st.write(f"📌 Horas totais trabalhadas: **{st.session_state.HORAS_TOTAIS}**")
-        st.write(f"📌 Valor da hora: **R${st.session_state.VALOR}**")
-        st.write(f"📌 Valor total a receber pelo período: **R${PAGAMENTO_TOTAL}**")
+        st.write(f"📌 Nome:  **{st.session_state.recuperar_nome}**")
+        st.write(f"📌 Projeto:  **{st.session_state.PROJETO}**")
+        st.write(f"📌 Período:  **{st.session_state.PERIODO}**")
+        st.write(f"📌 Horas totais trabalhadas:  **{st.session_state.HORAS_TOTAIS}**")
+        st.write(f"📌 Valor da hora:  **R${st.session_state.VALOR}**")
+        st.write(f"📌 Valor total a receber pelo período:  **R${PAGAMENTO_TOTAL}**")
 
         if st.button("✅ Realizar lançamento"):
             incluir_servico(project_id="pagamento-terceirizado",
