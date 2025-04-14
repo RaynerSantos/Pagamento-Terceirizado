@@ -147,81 +147,83 @@ if "LOGIN" in st.session_state:
         st.write("")
         st.write("")
 
-    st.markdown(
-                """
-                <h5 style="color: white; text-align: center;">
-                    📝 Informe abaixo os dados corretos
-                </h5>
-                """,
-                unsafe_allow_html=True
-    )
+        st.markdown(
+                    """
+                    <h5 style="color: white; text-align: center;">
+                        📝 Informe abaixo os dados corretos
+                    </h5>
+                    """,
+                    unsafe_allow_html=True
+        )
 
-    with st.form(key="editar_lancamento"):
-        PROJETO = st.selectbox(label="Informe o nome do projeto", options=["1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
-                                                                    #    "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
-                                                                    #    "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
-                                                                       "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"
-                                                                    #    "1.216-2 CIELO/CP/TRACKING NPS MENSAL 2ª ONDA_2025",
-                                                                    #    "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
-                                                                    #    "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
-                                                                    #    "1.216-5 CIELO/CP/TRACKING NPS MENSAL 5ª ONDA_2025",
-                                                                    #    "1.216-6 CIELO/CP/TRACKING NPS MENSAL 6ª ONDA_2025",
-                                                                    #    "1.216-7 CIELO/CP/TRACKING NPS MENSAL 7ª ONDA_2025",
-                                                                    #    "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
-                                                                    #    "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"
-                                                                       ])
-        PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_1, PERIODO_2])
-        HORAS_TOTAIS = st.text_input(label="Informe a quantidade TOTAL DE HORAS trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
-        VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
-        input_buttom_submit = st.form_submit_button("Enviar")
+        with st.form(key="editar_lancamento"):
+            PROJETO = st.selectbox(label="Informe o nome do projeto", options=["1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
+                                                                        #    "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
+                                                                        #    "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
+                                                                        "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"
+                                                                        #    "1.216-2 CIELO/CP/TRACKING NPS MENSAL 2ª ONDA_2025",
+                                                                        #    "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
+                                                                        #    "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
+                                                                        #    "1.216-5 CIELO/CP/TRACKING NPS MENSAL 5ª ONDA_2025",
+                                                                        #    "1.216-6 CIELO/CP/TRACKING NPS MENSAL 6ª ONDA_2025",
+                                                                        #    "1.216-7 CIELO/CP/TRACKING NPS MENSAL 7ª ONDA_2025",
+                                                                        #    "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
+                                                                        #    "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"
+                                                                        ])
+            PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_1, PERIODO_2])
+            HORAS_TOTAIS = st.text_input(label="Informe a quantidade TOTAL DE HORAS trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
+            VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
+            input_buttom_submit = st.form_submit_button("Enviar")
 
-    if input_buttom_submit:
-        # Converte o valor
-        try:
-            VALOR = float(st.session_state.VALOR.replace(",", "."))
-            only_hour = st.session_state.HORAS_TOTAIS.split(":")[0]
-            only_min = st.session_state.HORAS_TOTAIS.split(":")[1]
-            min_para_calculo = int(int(only_min) * 100 / 60)
-            total_horas_trabalhadas = float(only_hour + "." + str(min_para_calculo))
-            PAGAMENTO_TOTAL = total_horas_trabalhadas * VALOR
+        if input_buttom_submit:
+            # Converte o valor
+            try:
+                VALOR = float(st.session_state.VALOR.replace(",", "."))
+                only_hour = st.session_state.HORAS_TOTAIS.split(":")[0]
+                only_min = st.session_state.HORAS_TOTAIS.split(":")[1]
+                min_para_calculo = int(int(only_min) * 100 / 60)
+                total_horas_trabalhadas = float(only_hour + "." + str(min_para_calculo))
+                PAGAMENTO_TOTAL = total_horas_trabalhadas * VALOR
 
-            # st.write(f"📌 Nome:\t**{st.session_state.recuperar_nome}**")
-            # st.write(f"📌 Projeto:\t**{st.session_state.PROJETO}**")
-            # st.write(f"📌 Período:\t**{st.session_state.PERIODO}**")
-            # st.write(f"📌 Horas totais trabalhadas:\t**{st.session_state.HORAS_TOTAIS}**")
-            # st.write(f"📌 Valor da hora:\t**R${st.session_state.VALOR}**")
-            # st.write(f"📌 Valor total a receber pelo período:\t**R${PAGAMENTO_TOTAL}**")
+                # st.write(f"📌 Nome:\t**{st.session_state.recuperar_nome}**")
+                # st.write(f"📌 Projeto:\t**{st.session_state.PROJETO}**")
+                # st.write(f"📌 Período:\t**{st.session_state.PERIODO}**")
+                # st.write(f"📌 Horas totais trabalhadas:\t**{st.session_state.HORAS_TOTAIS}**")
+                # st.write(f"📌 Valor da hora:\t**R${st.session_state.VALOR}**")
+                # st.write(f"📌 Valor total a receber pelo período:\t**R${PAGAMENTO_TOTAL}**")
 
-            st.write("")
-            st.write("")
-            # st.write("Se as informações estão OK, clique em \"**Realizar lançamento**\" abaixo, caso contrário volte a página de serviços")
-            st.markdown(
-                        """
-                        <h5 style="color: white; text-align: center;">
-                            🔍 Se as informações estão OK, clique em \"<strong>Realizar lançamento</strong>\", caso contrário, volte para página de serviços.
-                        </h5>
-                        """,
-                        unsafe_allow_html=True
-                    )
-            if st.button("✔️ Realizar lançamento"):
-                # incluir_servico(project_id="pagamento-terceirizado",
-                #                 dataset_id="pagamento_terceirizado",
-                #                 table_id="horas_colaborador",
-                #                 TERCEIRIZADO=st.session_state.recuperar_nome, 
-                #                 SERVICO=st.session_state.SERVICO, 
-                #                 DESCRICAO=st.session_state.DESCRICAO, 
-                #                 PROJETO=st.session_state.PROJETO, 
-                #                 PERIODO=st.session_state.PERIODO, 
-                #                 HORAS_TOTAIS=st.session_state.HORAS_TOTAIS, 
-                #                 VALOR=round(VALOR,2), 
-                #                 PAGAMENTO_TOTAL=round(PAGAMENTO_TOTAL,2),
-                #                 TIPO_COLABORADOR=st.session_state.TIPO_COLABORADOR, 
-                #                 QUEM_EMITE_A_NF=st.session_state.QUEM_EMITE_A_NF)
-                st.success("✅ Serviço incluído com sucesso!")
-                st.write("Você já pode fechar a página ou retornar para a página de serviços.")
+                st.write("")
+                st.write("")
+                # st.write("Se as informações estão OK, clique em \"**Realizar lançamento**\" abaixo, caso contrário volte a página de serviços")
+                st.markdown(
+                            """
+                            <h5 style="color: white; text-align: center;">
+                                🔍 Se as informações estão OK, clique em \"<strong>Realizar lançamento</strong>\", caso contrário, volte para página de serviços.
+                            </h5>
+                            """,
+                            unsafe_allow_html=True
+                        )
+                if st.button("✔️ Realizar lançamento"):
+                    # incluir_servico(project_id="pagamento-terceirizado",
+                    #                 dataset_id="pagamento_terceirizado",
+                    #                 table_id="horas_colaborador",
+                    #                 TERCEIRIZADO=st.session_state.recuperar_nome, 
+                    #                 SERVICO=st.session_state.SERVICO, 
+                    #                 DESCRICAO=st.session_state.DESCRICAO, 
+                    #                 PROJETO=st.session_state.PROJETO, 
+                    #                 PERIODO=st.session_state.PERIODO, 
+                    #                 HORAS_TOTAIS=st.session_state.HORAS_TOTAIS, 
+                    #                 VALOR=round(VALOR,2), 
+                    #                 PAGAMENTO_TOTAL=round(PAGAMENTO_TOTAL,2),
+                    #                 TIPO_COLABORADOR=st.session_state.TIPO_COLABORADOR, 
+                    #                 QUEM_EMITE_A_NF=st.session_state.QUEM_EMITE_A_NF)
+                    st.success("✅ Serviço incluído com sucesso!")
+                    st.write("Você já pode fechar a página ou retornar para a página de serviços.")
 
-        except ValueError:
-            st.error("❌ Valor total da hora inválido. Use vírgula como separador decimal (Ex.: 17,00).")
+            except ValueError:
+                st.error("❌ Valor total da hora inválido. Use vírgula como separador decimal (Ex.: 17,00).")
+    else:
+        st.warning("⚠️ Você ainda não possui nenhum lançamento!")
 
     st.write("")
     st.write("")
