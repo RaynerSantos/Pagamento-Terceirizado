@@ -175,6 +175,9 @@ st.download_button(
 # if st.button("🗑️ Excluir lançamento"):
 #     st.switch_page("pages/Excluir_Lancamento.py")
 
+if st.button("✏️ Editar lançamento"):
+    st.switch_page("pages/Editar_Lancamento.py")
+
 st.write("")
 st.write("")
 st.write("")
