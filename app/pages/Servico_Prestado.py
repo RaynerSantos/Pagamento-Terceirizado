@@ -172,8 +172,8 @@ st.download_button(
 # else: 
 #     st.warning("⚠️ Não foi possível encontrar seu nome completo no banco de dados.")
 
-if st.button("🗑️ Excluir lançamento"):
-    st.switch_page("pages/Excluir_Lancamento.py")
+# if st.button("🗑️ Excluir lançamento"):
+#     st.switch_page("pages/Excluir_Lancamento.py")
 
 st.write("")
 st.write("")
