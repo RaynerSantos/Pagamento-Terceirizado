@@ -121,12 +121,31 @@ st.markdown(
 PERIODO_1 = "20/03/2025 A 31/03/2025"
 PERIODO_2 = "01/04/2025 A 24/04/2025"
 
-st.title("🔍 Conferir e Editar")  # "🔍 Conferir informações a serem registradas"
+df = ler_tabela(project_id="pagamento-terceirizado", 
+                dataset_id="pagamento_terceirizado", 
+                table_id="horas_colaborador")
+df_logins = ler_tabela(project_id="pagamento-terceirizado", 
+                    dataset_id="pagamento_terceirizado", 
+                    table_id="login_colaborador")
+
+recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
+recuperar_nome = recuperar_nome.iloc[0]
+periodo_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PERIODO"]
+
+st.title("✏️ Editar Lançamento")  
 st.write("")
 st.write("")
 
 # Verifica se o usuário está logado
 if "LOGIN" in st.session_state:
+
+    if not periodo_usuario.empty:
+        periodo_usuario = periodo_usuario.iloc[-1]
+        df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
+
+        st.dataframe(df_usuario_periodo[["TERCEIRIZADO","PROJETO","PERIODO","HORAS_TOTAIS","VALOR","PAGAMENTO_TOTAL"]], hide_index=True)
+        st.write("")
+        st.write("")
 
     st.markdown(
                 """
