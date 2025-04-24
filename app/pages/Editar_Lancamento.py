@@ -148,7 +148,7 @@ if "LOGIN" in st.session_state:
         # st.dataframe(df_usuario_periodo[["TERCEIRIZADO","PROJETO","PERIODO","HORAS_TOTAIS","VALOR","PAGAMENTO_TOTAL"]], hide_index=True)
         # st.write("")
 
-        st.write("📋 Informações do último lançamento realizado")
+        st.write("📋 Informações do **último** lançamento realizado")
         st.write(f"📌 Nome:\t**{df_usuario_periodo["TERCEIRIZADO"].iloc[0]}**")
         st.write(f"📌 Projeto:\t**{df_usuario_periodo["PROJETO"].iloc[0]}**")
         st.write(f"📌 Período:\t**{df_usuario_periodo["PERIODO"].iloc[0]}**")
