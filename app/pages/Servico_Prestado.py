@@ -132,6 +132,7 @@ df_logins = ler_tabela(project_id="pagamento-terceirizado",
 
 PERIODO_1 = "20/03/2025 A 31/03/2025"
 PERIODO_2 = "01/04/2025 A 24/04/2025"
+PERIODO_3 = "24/04/2025 A 04/05/2025"
 
 recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
 recuperar_nome = recuperar_nome.iloc[0]
@@ -144,16 +145,17 @@ recuperar_ult_pagamento = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PAGAMENT
 st.title("Pagamento Transcrição/Corte")
 st.write("")
 st.write(f"Bem-vindo, **{recuperar_nome}**! 😊")
-if not recuperar_ult_pagamento.empty:
-    periodo_usuario = periodo_usuario.iloc[-1]
-    df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
-    recuperar_ult_pagamento = df_usuario_periodo["PAGAMENTO_TOTAL"].sum()
-    # recuperar_ult_pagamento = round(recuperar_ult_pagamento.iloc[-1], 2)
-    recuperar_ult_pagamento = str(recuperar_ult_pagamento)
-    recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
-    st.write(f"Valor a receber no período de *{periodo_usuario}*:  **R${recuperar_ult_pagamento}**")
+if PERIODO_2 in periodo_usuario.values:
+    if not recuperar_ult_pagamento.empty:
+        periodo_usuario = periodo_usuario.iloc[-1]
+        df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
+        recuperar_ult_pagamento = df_usuario_periodo["PAGAMENTO_TOTAL"].sum()
+        # recuperar_ult_pagamento = round(recuperar_ult_pagamento.iloc[-1], 2)
+        recuperar_ult_pagamento = str(recuperar_ult_pagamento)
+        recuperar_ult_pagamento = recuperar_ult_pagamento.replace(".", ",")
+        st.write(f"Valor a receber no período de *{periodo_usuario}*:  **R${recuperar_ult_pagamento}**")
 else: 
-    st.write(f"Valor a receber no período de *{PERIODO_1}*:  **R$0,00**")
+    st.write(f"Valor a receber no período de *{PERIODO_2}*:  **R$0,00**")
     df_usuario_periodo = df.loc[df["TERCEIRIZADO"] == recuperar_nome]
 
 st.write("")
@@ -209,7 +211,7 @@ with st.form(key="servico"):
                                                                     #    "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
                                                                     #    "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"
                                                                        ])
-    PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_1, PERIODO_2])
+    PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_2, PERIODO_3])
     HORAS_TOTAIS = st.text_input(label="Informe a quantidade TOTAL DE HORAS trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
     VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
     TIPO_COLABORADOR = st.selectbox(label="Tipo de Colaborador", options=["MEI"])

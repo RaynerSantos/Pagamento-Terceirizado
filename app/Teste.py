@@ -94,6 +94,10 @@ print(f'\nnome:\n{recuperar_nome}')
 
 periodo_usuario = df.loc[df["LOGIN"] == 'andreia.goncalves', "PERIODO"]
 print(f'\nperiodo_usuario geral:\n {periodo_usuario.values}')
+if '01/04/2025 A 24/04/2025' in periodo_usuario.values:
+    print('\n O periodo 01/04/2025 A 24/04/2025 está na lista')
+else:
+    print('\nFalhou!')
 periodo_usuario = periodo_usuario.iloc[-1]
 print(f'\nperiodo_usuario:\n{periodo_usuario}')
 

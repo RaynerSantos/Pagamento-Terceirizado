@@ -120,6 +120,7 @@ st.markdown(
 
 PERIODO_1 = "20/03/2025 A 31/03/2025"
 PERIODO_2 = "01/04/2025 A 24/04/2025"
+PERIODO_3 = "24/04/2025 A 04/05/2025"
 
 df = ler_tabela(project_id="pagamento-terceirizado", 
                 dataset_id="pagamento_terceirizado", 
@@ -181,7 +182,7 @@ if "LOGIN" in st.session_state:
                                                                         #    "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
                                                                         #    "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"
                                                                         ])
-            NOVO_PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_1, PERIODO_2])
+            NOVO_PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_2, PERIODO_3])
             NOVAS_HORAS_TOTAIS = st.text_input(label="Informe a quantidade TOTAL DE HORAS trabalhadas no formato hh:mm:ss", 
                                                placeholder="162:36:00")
             NOVO_VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
