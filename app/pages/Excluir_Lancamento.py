@@ -138,7 +138,7 @@ periodo_usuario = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PERIODO"]
 if "LOGIN" in st.session_state:
     if not periodo_usuario.empty:
         periodo_usuario = periodo_usuario.iloc[-1]
-        st.write(f"Você tem certeza que deseja excluir o lançamento do período: {periodo_usuario} ?")
+        st.write(f"Você tem certeza que deseja excluir o **ÚLTIMO** lançamento referente ao período: {periodo_usuario} ?")
         if st.button("🗑️ Excluir Lançamento"):
             excluir_lancamento_sql(project_id="pagamento-terceirizado",
                                    dataset_id="pagamento_terceirizado",
