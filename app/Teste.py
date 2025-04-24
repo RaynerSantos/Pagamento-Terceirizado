@@ -93,6 +93,7 @@ recuperar_nome = df.loc[df["LOGIN"] == 'andreia.goncalves', "NOME_COMPLETO"]
 print(f'\nnome:\n{recuperar_nome}')
 
 periodo_usuario = df.loc[df["LOGIN"] == 'andreia.goncalves', "PERIODO"]
+print(f'\nperiodo_usuario geral:\n {periodo_usuario.values}')
 periodo_usuario = periodo_usuario.iloc[-1]
 print(f'\nperiodo_usuario:\n{periodo_usuario}')
 
