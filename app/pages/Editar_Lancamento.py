@@ -140,7 +140,8 @@ st.write("")
 # Verifica se o usuário está logado
 if "LOGIN" in st.session_state:
 
-    if not periodo_usuario.empty:
+    # if not periodo_usuario.empty:
+    if PERIODO_2 in periodo_usuario.values:
         periodo_usuario = periodo_usuario.iloc[-1]
         df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
 
@@ -217,7 +218,7 @@ if "LOGIN" in st.session_state:
             except ValueError:
                 st.error("❌ Valor total da hora inválido. Use vírgula como separador decimal (Ex.: 17,00).")
     else:
-        st.warning("⚠️ Você ainda não possui nenhum lançamento!")
+        st.warning(f"⚠️ Você ainda não possui nenhum lançamento no período {PERIODO_2}")
 
     st.write("")
     st.write("")
