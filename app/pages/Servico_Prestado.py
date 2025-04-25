@@ -201,9 +201,9 @@ with st.form(key="servico"):
     PROJETO = st.selectbox(label="Informe o nome do projeto", options=["1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
                                                                     #    "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
                                                                     #    "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
-                                                                       "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"
+                                                                    #    "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"
                                                                     #    "1.216-2 CIELO/CP/TRACKING NPS MENSAL 2ª ONDA_2025",
-                                                                    #    "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
+                                                                       "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
                                                                     #    "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
                                                                     #    "1.216-5 CIELO/CP/TRACKING NPS MENSAL 5ª ONDA_2025",
                                                                     #    "1.216-6 CIELO/CP/TRACKING NPS MENSAL 6ª ONDA_2025",
