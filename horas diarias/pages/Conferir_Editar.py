@@ -122,7 +122,7 @@ PROJETO_ATUAL = "1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025"
 # PERIODO_ATUAL = "01/04/2025 A 24/04/2025"
 PERIODO_ATUAL = "01/03/2025 A 08/03/2025"
 
-st.title("🔍 Conferir e Editar")  # "🔍 Conferir informações a serem registradas"
+st.title("🔍 Conferir e Enviar")  # "🔍 Conferir informações a serem registradas"
 st.write("")
 st.write("")
 
@@ -130,7 +130,17 @@ st.write("")
 if "LOGIN" in st.session_state and st.session_state.conferir_editar:
     df = st.session_state.df
     df_usuario = df.loc[~(df["NOME_COMPLETO"] == st.session_state.recuperar_nome) & (df["DATA"] >= st.session_state.data_inicial) & (df["DATA"] <= st.session_state.data_final)]
-    st.data_editor(st.session_state.df)
+
+    df_usuario_edited = st.session_state.df_usuario_edited
+    df_usuario_edited['VALOR_TOTAL'] = df_usuario_edited['VALOR_HORA'] * df_usuario_edited['QTD_HORAS']
+
+    st.dataframe(df_usuario_edited, hide_index=True, column_config={
+        #  "VALOR_TOTAL": "VALOR_TOTAL",
+         "VALOR_TOTAL": st.column_config.NumberColumn(
+            "VALOR_TOTAL",
+            help="Number decimal",
+             format="R$ %.2f"
+         ) } )
 
     # # Converte o valor
     # try:
@@ -190,5 +200,8 @@ if "LOGIN" in st.session_state and st.session_state.conferir_editar:
     # Botão para voltar à página principal
     if st.button("🔙 Voltar para a página principal"):
         st.switch_page("pages/Lancamento_horas.py")
+    st.write("")
+    if st.button("🔄 Recarregar página"):
+        st.rerun()
 else:
     st.warning("⚠️ Você precisa estar logado!")
