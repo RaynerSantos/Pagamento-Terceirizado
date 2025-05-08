@@ -150,4 +150,4 @@ if input_buttom_submit:
 
 # Se login for bem-sucedido, redireciona para a página de Servico_Prestado ou página do Administrador
 if st.session_state.login_sucesso:
-    st.switch_page("pages/Horas_Trabalhadas.py")
+    st.switch_page("pages/Lancamento_horas.py")

@@ -65,6 +65,24 @@ def incluir_horas(project_id, dataset_id, table_id,
     return
 
 
+# ===== Função para alterar a senha ===== #
+def alterar_senha(project_id, dataset_id, table_id, LOGIN, SENHA, df_logins):
+    # Atualiza a senha
+    df_logins.loc[df_logins["LOGIN"] == LOGIN, "SENHA"] = SENHA
+
+    # Envia a tabela inteira novamente, substituindo a antiga
+    # client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+    client = bigquery.Client(project=project_id)
+    tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
+
+    job_config = bigquery.LoadJobConfig(write_disposition="WRITE_TRUNCATE")  # Sobrescreve
+    job = client.load_table_from_dataframe(df_logins, tabela_destino, job_config=job_config)
+    job.result()
+
+    print("Senha alterada com sucesso!")
+    return
+
+
 # Função para salvar a tabela em um único Excel com formatação
 def salvar_excel_com_formatacao(bd):
     output = BytesIO()
