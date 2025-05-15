@@ -171,7 +171,8 @@ if "LOGIN" in st.session_state:
         )
 
         with st.form(key="editar_lancamento"):
-            NOVO_PROJETO = st.selectbox(label="Informe o nome do projeto", options=["1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
+            NOVO_PROJETO = st.selectbox(label="Informe o nome do projeto", options=[
+                                                                        # "1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
                                                                         #    "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
                                                                         #    "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
                                                                         # "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"

@@ -199,7 +199,8 @@ with st.form(key="servico"):
     TERCEIRIZADO = st.text_input(label="Informe o nome completo")
     SERVICO = st.selectbox(label="Informe o tipo de serviço prestado", options=["TRANSCRIÇÃO/CORTE"])
     DESCRICAO = st.selectbox(label="Informe a descrição do tipo de serviço prestado", options=["COMPILAÇÃO E FORNECIMENTO DE DADOS"])
-    PROJETO = st.selectbox(label="Informe o nome do projeto", options=["1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
+    PROJETO = st.selectbox(label="Informe o nome do projeto", options=[
+                                                                    # "1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
                                                                     #    "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
                                                                     #    "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
                                                                     #    "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"
