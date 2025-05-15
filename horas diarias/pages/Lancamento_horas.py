@@ -232,33 +232,11 @@ if not recuperar_nome.empty:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
     st.write("")
-    # Formulário de preenchimento do serviço prestado
-    st.write("Informe os dados bancários abaixo")
-    with st.form(key="hora_diaria"):
-        BANCO = st.text_input(label="Informe o Banco que deseja receber o pagamento")
-        AGENCIA = st.text_input(label="Informe a agência")
-        CONTA = st.text_input(label="Informe o número da conta")
-        TIPO_PIX = st.selectbox(label="Pix", options=["Telefone", "CPF", "E-mail"])
-        CHAVE_PIX = st.text_input(label="Informe a chave pix")
-        input_buttom_submit = st.form_submit_button("💾 Salvar dados")
-
-        if input_buttom_submit:
-            st.session_state.BANCO = BANCO
-            st.session_state.AGENCIA = AGENCIA
-            st.session_state.CONTA = CONTA
-            st.session_state.TIPO_PIX = TIPO_PIX
-            st.session_state.CHAVE_PIX = CHAVE_PIX
-            df_usuario_edited["DATA"] = pd.to_datetime(df_usuario_edited["DATA"]).dt.date
-            st.session_state.df_usuario_edited = df_usuario_edited
-            st.session_state.conferir_editar = True
-            st.switch_page("pages/Conferir_Editar.py")
-
-    # if st.button("💾 Salvar dados"):
-    #     df_usuario_edited["DATA"] = pd.to_datetime(df_usuario_edited["DATA"]).dt.date
-    #     st.session_state.df_usuario_edited = df_usuario_edited
-    #     st.session_state.conferir_editar = True
-    #     st.switch_page("pages/Conferir_Editar.py")
-
+    if st.button("💾 Salvar dados"):
+        df_usuario_edited["DATA"] = pd.to_datetime(df_usuario_edited["DATA"]).dt.date
+        st.session_state.df_usuario_edited = df_usuario_edited
+        st.session_state.conferir_editar = True
+        st.switch_page("pages/Conferir_Editar.py")
 
 
 st.write("")
