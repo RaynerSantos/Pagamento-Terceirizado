@@ -8,17 +8,17 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import PatternFill, Alignment, Font, Border, Side
 from openpyxl.styles.numbers import BUILTIN_FORMATS
 from io import BytesIO
-from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login
+from Funcoes import ler_tabela, incluir_servico, incluir_login, alterar_senha, excluir_login
 import json
 from google.oauth2 import service_account
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
-# Carrega a chave do Streamlit Secrets
-gcp_info = json.loads(st.secrets["gcp_service_account"])
+# # Carrega a chave do Streamlit Secrets
+# gcp_info = json.loads(st.secrets["gcp_service_account"])
 
-# Cria credencial a partir do dicionário
-credentials = service_account.Credentials.from_service_account_info(gcp_info)
+# # Cria credencial a partir do dicionário
+# credentials = service_account.Credentials.from_service_account_info(gcp_info)
 
 # Função para salvar a tabela em um único Excel com formatação
 def salvar_excel_com_formatacao(bd):
@@ -207,9 +207,7 @@ st.write(f"Bem-vindo, **{st.session_state.LOGIN}**! 😊")
 st.write("")
 st.write("📋 Tabela com as informações de Serviços que foram prestados pelos colaboradores")
 
-df = ler_tabela(project_id="pagamento-terceirizado", 
-                dataset_id="pagamento_terceirizado", 
-                table_id="horas_colaborador")
+df = ler_tabela(sheet_name="Pagamento_Terceirizado", worksheet_name="horas_colaborador")
 st.dataframe(df, width=2000, hide_index=True)
 # Exibe a tabela com HTML estilizado
 # st.markdown(df.to_html(index=False, escape=False), unsafe_allow_html=True)
@@ -228,9 +226,7 @@ st.write("")
 st.write("")
 
 st.write("📋 Tabela com as informações de logins e senhas de cada colaborador")
-df_logins = ler_tabela(project_id="pagamento-terceirizado", 
-                       dataset_id="pagamento_terceirizado", 
-                       table_id="login_colaborador")
+df_logins = ler_tabela(sheet_name="Pagamento_Terceirizado", worksheet_name="login_colaborador")
 st.dataframe(df_logins, hide_index=True)
 # Exibe a tabela com HTML estilizado
 # st.markdown(df.to_html(index=False, escape=False), unsafe_allow_html=True)
@@ -252,19 +248,18 @@ if input_buttom_submit_new_login:
         if ((df_logins['LOGIN'] == NEW_LOGIN) & (df_logins['NOME_COMPLETO'] == NOME_COMPLETO)).any():
             st.warning("❌ Login já existente no banco de dados!")
         else:
-            incluir_login(project_id="pagamento-terceirizado",
-                        dataset_id="pagamento_terceirizado", 
-                        table_id="login_colaborador",
-                        LOGIN=NEW_LOGIN,
-                        SENHA="123",
-                        NOME_COMPLETO=NOME_COMPLETO)
+            incluir_login(sheet_name="Pagamento_Terceirizado", 
+                          worksheet_name="login_colaborador", 
+                          LOGIN=NEW_LOGIN, 
+                          SENHA="123", 
+                          NOME_COMPLETO=NOME_COMPLETO)
+            
             st.success("✅ Login incluído com sucesso!")
     elif ACAO == 'EXCLUIR':
-        excluir_login(project_id="pagamento-terceirizado",
-                      dataset_id="pagamento_terceirizado", 
-                      table_id="login_colaborador",
-                      LOGIN=NEW_LOGIN,
-                      df_logins=df_logins)
+        excluir_login(sheet_name="Pagamento_Terceirizado", 
+                      worksheet_name="login_colaborador", 
+                      LOGIN=NEW_LOGIN)
+        
         st.success("✅ Login excluído da base com sucesso!")
 
 st.write("")

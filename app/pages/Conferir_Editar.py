@@ -3,17 +3,17 @@ from google.cloud import bigquery
 import pandas as pd
 import numpy as np
 import streamlit as st
-from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login, excluir_lancamento_sql
+from Funcoes import ler_tabela, incluir_servico, incluir_login, alterar_senha, excluir_login, excluir_lancamento
 import json
 from google.oauth2 import service_account
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
-# Carrega a chave do Streamlit Secrets
-gcp_info = json.loads(st.secrets["gcp_service_account"])
+# # Carrega a chave do Streamlit Secrets
+# gcp_info = json.loads(st.secrets["gcp_service_account"])
 
-# Cria credencial a partir do dicionário
-credentials = service_account.Credentials.from_service_account_info(gcp_info)
+# # Cria credencial a partir do dicionário
+# credentials = service_account.Credentials.from_service_account_info(gcp_info)
 
 # CSS personalizado
 st.markdown(
@@ -153,19 +153,19 @@ if "LOGIN" in st.session_state:
                     unsafe_allow_html=True
                 )
         if st.button("✔️ Realizar lançamento"):
-            incluir_servico(project_id="pagamento-terceirizado",
-                            dataset_id="pagamento_terceirizado",
-                            table_id="horas_colaborador",
-                            TERCEIRIZADO=st.session_state.recuperar_nome, 
+            incluir_servico(TERCEIRIZADO=st.session_state.recuperar_nome, 
                             SERVICO=st.session_state.SERVICO, 
                             DESCRICAO=st.session_state.DESCRICAO, 
                             PROJETO=st.session_state.PROJETO, 
                             PERIODO=st.session_state.PERIODO, 
                             HORAS_TOTAIS=st.session_state.HORAS_TOTAIS, 
                             VALOR=round(VALOR,2), 
-                            PAGAMENTO_TOTAL=round(PAGAMENTO_TOTAL,2),
-                            TIPO_COLABORADOR=st.session_state.TIPO_COLABORADOR, 
-                            QUEM_EMITE_A_NF=st.session_state.QUEM_EMITE_A_NF)
+                            PAGAMENTO_TOTAL=round(PAGAMENTO_TOTAL,2), 
+                    TIPO_COLABORADOR=st.session_state.TIPO_COLABORADOR, 
+                    QUEM_EMITE_A_NF=st.session_state.QUEM_EMITE_A_NF,
+                    sheet_name="Pagamento_Terceirizado", 
+                    worksheet_name="horas_colaborador")
+
             st.success("✅ Serviço incluído com sucesso!")
             st.write("Você já pode fechar a página ou retornar para a página de serviços.")
 

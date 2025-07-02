@@ -3,17 +3,17 @@ from google.cloud import bigquery
 import pandas as pd
 import numpy as np
 import streamlit as st
-from Funcoes import ler_tabela, incluir_servico, apagar_tabela, incluir_login, alterar_senha, excluir_login
+from Funcoes import ler_tabela, incluir_servico, incluir_login, alterar_senha, excluir_login
 import json
 from google.oauth2 import service_account
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
-# Carrega a chave do Streamlit Secrets
-gcp_info = json.loads(st.secrets["gcp_service_account"])
+# # Carrega a chave do Streamlit Secrets
+# gcp_info = json.loads(st.secrets["gcp_service_account"])
 
-# Cria credencial a partir do dicionário
-credentials = service_account.Credentials.from_service_account_info(gcp_info)
+# # Cria credencial a partir do dicionário
+# credentials = service_account.Credentials.from_service_account_info(gcp_info)
 
 # CSS personalizado
 st.markdown(
@@ -136,15 +136,13 @@ if "LOGIN" in st.session_state:
         elif nova_senha.strip() == "":
             st.warning("⚠️ A nova senha não pode estar em branco.")
         else:
-            df_logins = ler_tabela(project_id="pagamento-terceirizado", 
-                                   dataset_id="pagamento_terceirizado", 
-                                   table_id="login_colaborador")
-            alterar_senha(project_id="pagamento-terceirizado", 
-                          dataset_id="pagamento_terceirizado", 
-                          table_id="login_colaborador", 
+            df_logins = ler_tabela(sheet_name="Pagamento_Terceirizado", worksheet_name="login_colaborador")
+
+            alterar_senha(sheet_name="Pagamento_Terceirizado", 
+                          worksheet_name="login_colaborador", 
                           LOGIN=st.session_state.LOGIN, 
-                          SENHA=nova_senha, 
-                          df_logins=df_logins)
+                          SENHA=nova_senha)
+        
             st.success("✅ Senha alterada com sucesso!")
     
     st.write("")

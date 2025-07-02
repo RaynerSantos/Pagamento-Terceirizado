@@ -1,223 +1,181 @@
 import os
-from google.cloud import bigquery
 import pandas as pd
 import numpy as np
 import streamlit as st
+import gspread
+from google.oauth2.service_account import Credentials
 import json
-from google.oauth2 import service_account
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import PatternFill, Alignment, Font, Border, Side
 from openpyxl.styles.numbers import BUILTIN_FORMATS
 from io import BytesIO
 from datetime import datetime
+from oauth2client.service_account import ServiceAccountCredentials
 
-# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
+# Autenticação
+json_path = "C:\PROJETOS\Pagamento Terceirizado\pagamento-terceirizado-464719-cc762ff27770.json"
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-# Carrega a chave do Streamlit Secrets
-gcp_info = json.loads(st.secrets["gcp_service_account"])
 
-# Cria credencial a partir do dicionário
-credentials = service_account.Credentials.from_service_account_info(gcp_info)
+# Autenticação
+credentials = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
+client = gspread.authorize(credentials)
 
-# Usa ao inicializar o cliente
-client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
 
-# Nome do projeto, dataset e tabela
-project_id = "pagamento-terceirizado"
-dataset_id = "pagamento_terceirizado"
-table_id = "horas_colaborador"
+# ===== Função para ler a planilha ===== #
+def ler_tabela(sheet_name, worksheet_name):
+    # Acessar a planilha
+    spreadsheet = client.open(sheet_name)
+    worksheet = spreadsheet.worksheet(worksheet_name)
 
-# ===== Função para ler a tabela ===== #
-def ler_tabela(project_id, dataset_id, table_id):
-    if table_id == "login_colaborador":
-        # Inicializa o cliente
-        client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+    # Obter todos os valores da planilha
+    data = worksheet.get_all_values()
 
-        # Consulta SQL para ler a tabela
-        query = f"SELECT * FROM `{project_id}.{dataset_id}.{table_id}`"
-        df = client.query(query).to_dataframe()
+    # Converter para um DataFrame do Pandas
+    data = pd.DataFrame(data[1:], columns=data[0])  # A primeira linha vira cabeçalho
+    return data
 
-    elif table_id == "horas_colaborador":
-        # Inicializa o cliente
-        client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
-
-        # Consulta SQL para ler a tabela
-        query = f"SELECT * FROM `{project_id}.{dataset_id}.{table_id}` ORDER BY DATA_CRIACAO ASC"
-        df = client.query(query).to_dataframe()
-
-    return df
+# Teste de leitura
+df = ler_tabela(sheet_name="Pagamento_Terceirizado", worksheet_name="horas_colaborador")
+print(df.head())
 
 # ===== Função para incluir um novo serviço prestado ===== #
-def incluir_servico(project_id, dataset_id, table_id, 
-                    TERCEIRIZADO, SERVICO, DESCRICAO, PROJETO, PERIODO, HORAS_TOTAIS, VALOR, PAGAMENTO_TOTAL, 
-                    TIPO_COLABORADOR, QUEM_EMITE_A_NF):
-    # Inicializa o cliente
-    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+def incluir_servico(TERCEIRIZADO, SERVICO, DESCRICAO, PROJETO, PERIODO,
+                    HORAS_TOTAIS, VALOR, PAGAMENTO_TOTAL, TIPO_COLABORADOR, QUEM_EMITE_A_NF, 
+                    sheet_name, worksheet_name):
+    # Acessar a planilha
+    spreadsheet = client.open(sheet_name)
+    worksheet = spreadsheet.worksheet(worksheet_name)
 
-    # DataFrame com dados novos
-    novos_dados = pd.DataFrame({
-        "TERCEIRIZADO": [TERCEIRIZADO],
-        "SERVICO": [SERVICO],
-        "DESCRICAO": [DESCRICAO],
-        "PROJETO": [PROJETO],
-        "PERIODO": [PERIODO],
-        "HORAS_TOTAIS": [HORAS_TOTAIS],
-        "VALOR": [VALOR],
-        "PAGAMENTO_TOTAL": [PAGAMENTO_TOTAL],
-        "TIPO_COLABORADOR": [TIPO_COLABORADOR],
-        "QUEM_EMITE_A_NF": [QUEM_EMITE_A_NF],
-        "DATA_CRIACAO": [datetime.now()]
-    })
-
-    # Define a tabela completa
-    tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
-
-    # Insere no modo append
-    job = client.load_table_from_dataframe(novos_dados, tabela_destino)
-    job.result()  # Espera o job terminar
-    print("Dados inseridos com sucesso!")
-    return
+    nova_linha = [
+        TERCEIRIZADO,
+        SERVICO,
+        DESCRICAO,
+        PROJETO,
+        PERIODO,
+        HORAS_TOTAIS,
+        VALOR,
+        PAGAMENTO_TOTAL,
+        TIPO_COLABORADOR,
+        QUEM_EMITE_A_NF,
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    ]
+    
+    # Adiciona ao final da worksheet
+    worksheet.append_row(nova_linha, value_input_option='USER_ENTERED')
+    print("✅ DataFrame atualizado com sucesso!")
 
 # ===== Função para incluir um novo login ===== #
-def incluir_login(project_id, dataset_id, table_id, LOGIN, SENHA, NOME_COMPLETO):
-    # Inicializa o cliente
-    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+def incluir_login(sheet_name, worksheet_name, LOGIN, SENHA, NOME_COMPLETO):
+    # Acessar a planilha
+    spreadsheet = client.open(sheet_name)
+    worksheet = spreadsheet.worksheet(worksheet_name)
 
-    # DataFrame com dados novos
-    novos_dados = pd.DataFrame({
-        "LOGIN": [LOGIN],
-        "SENHA": [SENHA],
-        "NOME_COMPLETO": [NOME_COMPLETO]
-    })
-
-    # Define a tabela completa
-    tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
-
-    # Insere no modo append
-    job = client.load_table_from_dataframe(novos_dados, tabela_destino)
-    job.result()  # Espera o job terminar
-    print("Dados inseridos com sucesso!")
+    nova_linha = [
+        LOGIN,
+        SENHA,
+        NOME_COMPLETO
+    ]
+    
+    # Adiciona ao final da worksheet
+    worksheet.append_row(nova_linha, value_input_option='USER_ENTERED')
+    print("✅ Login incluído com sucesso!")
     return
 
 # ===== Função para alterar a senha ===== #
-def alterar_senha(project_id, dataset_id, table_id, LOGIN, SENHA, df_logins):
+def alterar_senha(sheet_name, worksheet_name, LOGIN, SENHA):
+    # Ler a tabela de logins
+    df_logins = ler_tabela(sheet_name=sheet_name, worksheet_name=worksheet_name)
     # Atualiza a senha
     df_logins.loc[df_logins["LOGIN"] == LOGIN, "SENHA"] = SENHA
 
-    # Envia a tabela inteira novamente, substituindo a antiga
-    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
-    # client = bigquery.Client()
-    tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
+     # Acessar a planilha
+    spreadsheet = client.open(sheet_name)
+    worksheet = spreadsheet.worksheet(worksheet_name)
 
-    job_config = bigquery.LoadJobConfig(write_disposition="WRITE_TRUNCATE")  # Sobrescreve
-    job = client.load_table_from_dataframe(df_logins, tabela_destino, job_config=job_config)
-    job.result()
-
-    print("Senha alterada com sucesso!")
+    # Converter o DataFrame para uma lista de listas (formato aceito pelo gspread)
+    data_atualizada = [df_logins.columns.values.tolist()] + df_logins.values.tolist()
+    # Atualizar a planilha com os novos dados
+    worksheet.update(data_atualizada)
+    print("\n✅ Senha alterada com sucesso!")
     return
 
 # ===== Função para excluir login ===== #
-def excluir_login(project_id, dataset_id, table_id, LOGIN, df_logins):
-    # Exclui o login desejado
-    df_logins = df_logins.loc[df_logins["LOGIN"] != LOGIN]
+def excluir_login(sheet_name, worksheet_name, LOGIN):
+    # Acessar a planilha
+    spreadsheet = client.open(sheet_name)
+    worksheet = spreadsheet.worksheet(worksheet_name)
 
-    # Envia a tabela inteira novamente, substituindo a antiga
-    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
-    # client = bigquery.Client()
-    tabela_destino = f"{project_id}.{dataset_id}.{table_id}"
+    # Ler os dados
+    data = worksheet.get_all_values()
+    header = data[0]
+    rows = data[1:]
 
-    job_config = bigquery.LoadJobConfig(write_disposition="WRITE_TRUNCATE")  # Sobrescreve
-    job = client.load_table_from_dataframe(df_logins, tabela_destino, job_config=job_config)
-    job.result()
+    # Encontrar índice da linha com o LOGIN informado
+    idx_para_remover = None
+    for i, row in enumerate(rows):
+        if row[0] == LOGIN:  # Considerando que LOGIN está na primeira coluna
+            idx_para_remover = i + 2  # +2 para compensar cabeçalho e índice 1-based do Google Sheets
+            break
 
-    print("Login excluído com sucesso!")
-    return
-
-
-# ===== Função para apagar a tabela ===== #
-def apagar_tabela(project_id, dataset_id, table_id):
-    # Inicializa o cliente
-    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
-
-    # Consulta SQL para apagar a tabela
-    query = f"TRUNCATE TABLE `{project_id}.{dataset_id}.{table_id}`"
-    query_job = client.query(query)
-    query_job.result()
-    print("Tabela truncada com sucesso!")
-    return
+    # Remover a linha, se encontrada
+    if idx_para_remover:
+        worksheet.delete_rows(idx_para_remover)
+        print(f"✅ Login '{LOGIN}' excluído com sucesso!")
+    else:
+        print(f"⚠️ Login '{LOGIN}' não encontrado na planilha.")
 
 
+###=== Função para excluir lançamento realizado ===###
+def excluir_lancamento(sheet_name, worksheet_name, TERCEIRIZADO, PERIODO):
+    # Acessar a planilha
+    spreadsheet = client.open(sheet_name)
+    worksheet = spreadsheet.worksheet(worksheet_name)
 
-def excluir_lancamento_sql(project_id, dataset_id, table_id, LOGIN, periodo, df_logins):
-    # client = bigquery.Client(project=project_id)
-    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+    # Obter os dados da planilha
+    data = worksheet.get_all_values()
+    header = data[0]
+    rows = data[1:]
 
-    # Recupera o nome completo baseado no login
-    recuperar_nome = df_logins.loc[df_logins["LOGIN"] == LOGIN, "NOME_COMPLETO"].iloc[0]
+    # Identificar os índices das colunas relevantes
+    try:
+        idx_terceirizado = header.index("TERCEIRIZADO")
+        idx_periodo = header.index("PERIODO")
+    except ValueError as e:
+        print("❌ Erro: Colunas 'TERCEIRIZADO' ou 'PERIODO' não encontradas.")
+        return
 
-    # Cria a query DELETE
-    query = f"""
-        DELETE FROM `{project_id}.{dataset_id}.{table_id}`
-        WHERE TERCEIRIZADO = @terceirizado AND PERIODO = @periodo
-    """
+    # Encontrar a linha que bate com os dois critérios
+    linha_para_excluir = None
+    for i, row in enumerate(rows):
+        if (row[idx_terceirizado] == TERCEIRIZADO) and (row[idx_periodo] == PERIODO):
+            linha_para_excluir = i + 2  # +2 por causa do cabeçalho e índice 1-based
+            break
 
-    # Configura os parâmetros
-    job_config = bigquery.QueryJobConfig(
-        query_parameters=[
-            bigquery.ScalarQueryParameter("terceirizado", "STRING", recuperar_nome),
-            bigquery.ScalarQueryParameter("periodo", "STRING", periodo),
-        ]
-    )
-
-    # Executa a query
-    query_job = client.query(query, job_config=job_config)
-    query_job.result()
-
-    print(f"Lançamento de {recuperar_nome} no período {periodo} foi excluído com sucesso (via SQL).")
-
+    # Excluir a linha, se encontrada
+    if linha_para_excluir:
+        worksheet.delete_rows(linha_para_excluir)
+        print(f"✅ Lançamento de '{TERCEIRIZADO}' no período '{PERIODO}' foi excluído com sucesso!")
+    else:
+        print(f"⚠️ Nenhum lançamento encontrado para '{TERCEIRIZADO}' no período '{PERIODO}'.")
 
 
-def atualizar_lancamento_sql(project_id, dataset_id, table_id,
-                              LOGIN, periodo_antigo,
-                              novo_projeto, novo_periodo, novas_horas, novo_valor, pagamento_total,
-                              df_logins):
-    # Conecta ao BigQuery
-    client = bigquery.Client(credentials=credentials, project=gcp_info["project_id"])
+# incluir_servico(TERCEIRIZADO="Rayner", SERVICO="TESTE", DESCRICAO="TESTE", PROJETO="TESTE", PERIODO="TESTE", 
+#                 HORAS_TOTAIS="12:00:00", VALOR="17", PAGAMENTO_TOTAL="134", 
+#                     TIPO_COLABORADOR="TESTE", QUEM_EMITE_A_NF="TESTE",
+#                     sheet_name="Pagamento_Terceirizado", worksheet_name="horas_colaborador")
 
-    # Recupera o nome completo a partir do login
-    recuperar_nome = df_logins.loc[df_logins["LOGIN"] == LOGIN, "NOME_COMPLETO"].iloc[0]
+# incluir_login(sheet_name="Pagamento_Terceirizado", worksheet_name="login_colaborador", 
+#               LOGIN="YAN", SENHA="123!@", NOME_COMPLETO="YAN SABARENSE")
 
-    # Cria a query UPDATE
-    query = f"""
-        UPDATE `{project_id}.{dataset_id}.{table_id}`
-        SET 
-            PROJETO = @novo_projeto,
-            PERIODO = @novo_periodo,
-            HORAS_TOTAIS = @novas_horas,
-            VALOR = @novo_valor,
-            PAGAMENTO_TOTAL = @pagamento_total
-        WHERE TERCEIRIZADO = @terceirizado AND PERIODO = @periodo_antigo
-    """
+# alterar_senha(sheet_name="Pagamento_Terceirizado", worksheet_name="login_colaborador", LOGIN="rayner.santos", SENHA="123$")
 
-    # Configura os parâmetros
-    job_config = bigquery.QueryJobConfig(
-        query_parameters=[
-            bigquery.ScalarQueryParameter("novo_projeto", "STRING", novo_projeto),
-            bigquery.ScalarQueryParameter("novo_periodo", "STRING", novo_periodo),
-            bigquery.ScalarQueryParameter("novas_horas", "STRING", novas_horas),
-            bigquery.ScalarQueryParameter("novo_valor", "FLOAT64", novo_valor),
-            bigquery.ScalarQueryParameter("pagamento_total", "FLOAT64", pagamento_total),
-            bigquery.ScalarQueryParameter("terceirizado", "STRING", recuperar_nome),
-            bigquery.ScalarQueryParameter("periodo_antigo", "STRING", periodo_antigo),
-        ]
-    )
 
-    # Executa a query
-    query_job = client.query(query, job_config=job_config)
-    query_job.result()
+# excluir_login(sheet_name="Pagamento_Terceirizado", worksheet_name="login_colaborador", LOGIN="YAN")
 
-    print(f"Lançamento de {recuperar_nome} atualizado com sucesso!")
+# excluir_lancamento(sheet_name="Pagamento_Terceirizado", worksheet_name="horas_colaborador", TERCEIRIZADO="Rayner", PERIODO="TESTE")
+
 
 
 
