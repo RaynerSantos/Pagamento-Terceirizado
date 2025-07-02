@@ -20,11 +20,6 @@ client = gspread.authorize(credentials)
 # credentials = service_account.Credentials.from_service_account_info(gcp_info)
 
 
-# Nome do projeto, dataset e tabela
-project_id = "pagamento-terceirizado"
-dataset_id = "pagamento_terceirizado"
-table_id = "login_colaborador"  # "horas_colaborador" / "login_colaborador"
-
 # CSS personalizado
 st.markdown(
     """

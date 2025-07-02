@@ -8,7 +8,7 @@ import json
 from google.oauth2 import service_account
 from datetime import datetime
 import gspread
-from utils import client, credentials
+from utils import client, credentials, PERIODO_1, PERIODO_2
 
 client = gspread.authorize(credentials)
 
@@ -130,8 +130,7 @@ if "login_sucesso" not in st.session_state or not st.session_state.login_sucesso
 df = ler_tabela(sheet_name="Pagamento_Terceirizado", worksheet_name="horas_colaborador")
 df_logins = ler_tabela(sheet_name="Pagamento_Terceirizado", worksheet_name="login_colaborador")
 
-PERIODO_1 = "06/05/2025 A 31/05/2025"
-PERIODO_2 = "01/07/2025 A 19/07/2025"
+
 
 
 recuperar_nome = df_logins.loc[df_logins["LOGIN"] == st.session_state.LOGIN, "NOME_COMPLETO"]
