@@ -12,15 +12,13 @@ from openpyxl.styles.numbers import BUILTIN_FORMATS
 from io import BytesIO
 from datetime import datetime
 from oauth2client.service_account import ServiceAccountCredentials
+from utils import client, credentials
 
-# Autenticação
-json_path = "C:\PROJETOS\Pagamento Terceirizado\pagamento-terceirizado-464719-cc762ff27770.json"
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-
-
-# Autenticação
-credentials = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
 client = gspread.authorize(credentials)
+
+# # Autenticação
+# credentials = ServiceAccountCredentials.from_json_keyfile_name(json_path, scope)
+# client = gspread.authorize(credentials)
 
 
 # ===== Função para ler a planilha ===== #

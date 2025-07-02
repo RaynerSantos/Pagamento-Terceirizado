@@ -6,6 +6,10 @@ import streamlit as st
 from Funcoes import ler_tabela, incluir_servico, incluir_login, alterar_senha, excluir_login
 import json
 from google.oauth2 import service_account
+import gspread
+from utils import client, credentials
+
+client = gspread.authorize(credentials)
 
 # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\PROJETOS\Pagamento Terceirizado\Ignorar\pagamento-terceirizado-467d410b51b5.json"
 
