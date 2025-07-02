@@ -118,10 +118,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-PERIODO_1 = "20/03/2025 A 31/03/2025"
-PERIODO_2 = "01/04/2025 A 24/04/2025"
-PERIODO_3 = "24/04/2025 A 04/05/2025"
-PERIODO_4 = "06/05/2025 A 31/05/2025"
+PERIODO_1 = "06/05/2025 A 31/05/2025"
+PERIODO_2 = "01/07/2025 A 19/07/2025"
 
 df = ler_tabela(project_id="pagamento-terceirizado", 
                 dataset_id="pagamento_terceirizado", 
@@ -142,7 +140,7 @@ st.write("")
 if "LOGIN" in st.session_state:
 
     # if not periodo_usuario.empty:
-    if PERIODO_4 in periodo_usuario.values:
+    if PERIODO_2 in periodo_usuario.values:
         periodo_usuario = periodo_usuario.iloc[-1]
         df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
 
@@ -173,19 +171,19 @@ if "LOGIN" in st.session_state:
         with st.form(key="editar_lancamento"):
             NOVO_PROJETO = st.selectbox(label="Informe o nome do projeto", options=[
                                                                         # "1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
-                                                                        #    "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
+                                                                           "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
                                                                         #    "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
                                                                         # "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"
                                                                         #    "1.216-2 CIELO/CP/TRACKING NPS MENSAL 2ª ONDA_2025",
                                                                         #    "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
-                                                                           "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
+                                                                        #    "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
                                                                         #    "1.216-5 CIELO/CP/TRACKING NPS MENSAL 5ª ONDA_2025",
                                                                         #    "1.216-6 CIELO/CP/TRACKING NPS MENSAL 6ª ONDA_2025",
                                                                         #    "1.216-7 CIELO/CP/TRACKING NPS MENSAL 7ª ONDA_2025",
                                                                         #    "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
                                                                         #    "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"
                                                                         ])
-            NOVO_PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_3, PERIODO_4])
+            NOVO_PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_2])
             NOVAS_HORAS_TOTAIS = st.text_input(label="Informe a quantidade TOTAL DE HORAS trabalhadas no formato hh:mm:ss", 
                                                placeholder="162:36:00")
             NOVO_VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
@@ -220,7 +218,7 @@ if "LOGIN" in st.session_state:
             except ValueError:
                 st.error("❌ Valor total da hora inválido. Use vírgula como separador decimal (Ex.: 17,00).")
     else:
-        st.warning(f"⚠️ Você ainda não possui nenhum lançamento no período {PERIODO_4}")
+        st.warning(f"⚠️ Você ainda não possui nenhum lançamento no período {PERIODO_2}")
 
     st.write("")
     st.write("")
