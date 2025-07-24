@@ -22,5 +22,20 @@ credentials_dict = json.loads(gcp_credentials)
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
 client = gspread.authorize(credentials)
 
-PERIODO_1 = "06/05/2025 A 31/05/2025"
-PERIODO_2 = "01/07/2025 A 19/07/2025"
+PERIODO_1 = "01/07/2025 A 19/07/2025"
+PERIODO_2 = "11/08/2025 A 05/09/2025"
+
+PROJETOS = [
+            # "1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
+                # "1.217-2 CIELO/CP/SATISFAÇÃO 2ª ONDA_2025",
+            #    "1.217-3 CIELO/CP/SATISFAÇÃO 3ª ONDA_2025",
+            #    "1.216-1 CIELO/CP/TRACKING NPS MENSAL 1ª ONDA_2025"
+            #    "1.216-2 CIELO/CP/TRACKING NPS MENSAL 2ª ONDA_2025",
+            #    "1.216-3 CIELO/CP/TRACKING NPS MENSAL 3ª ONDA_2025",
+            #    "1.216-4 CIELO/CP/TRACKING NPS MENSAL 4ª ONDA_2025",
+            #    "1.216-5 CIELO/CP/TRACKING NPS MENSAL 5ª ONDA_2025",
+               "1.216-6 CIELO/CP/TRACKING NPS MENSAL 6ª ONDA_2025",
+            #    "1.216-7 CIELO/CP/TRACKING NPS MENSAL 7ª ONDA_2025",
+            #    "1.216-8 CIELO/CP/TRACKING NPS MENSAL 8ª ONDA_2025",
+            #    "1.216-9 CIELO/CP/TRACKING NPS MENSAL 9ª ONDA_2025"
+                ]
