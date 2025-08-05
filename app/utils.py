@@ -24,7 +24,6 @@ client = gspread.authorize(credentials)
 
 PERIODO_1 = "20/07/2025 A 04/08/2025"
 # PERIODO_2 = "11/08/2025 A 05/09/2025"
-PERIODOS = [PERIODO_1]
 
 PROJETOS = [
             # "1.217-1 CIELO/CP/SATISFAÇÃO 1ª ONDA_2025",
