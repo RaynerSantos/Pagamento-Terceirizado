@@ -22,7 +22,7 @@ credentials_dict = json.loads(gcp_credentials)
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict, scope)
 client = gspread.authorize(credentials)
 
-PERIODO_1 = "01/07/2025 A 19/07/2025"
+PERIODO_1 = "20/07/2025 A 04/08/2025"
 PERIODO_2 = "11/08/2025 A 05/09/2025"
 
 PROJETOS = [
