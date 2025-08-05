@@ -144,7 +144,7 @@ recuperar_ult_pagamento = df.loc[df["TERCEIRIZADO"] == recuperar_nome, "PAGAMENT
 st.title("Pagamento Transcrição/Corte")
 st.write("")
 st.write(f"Bem-vindo, **{recuperar_nome}**! 😊")
-if PERIODO_2 in periodo_usuario.values:
+if PERIODO_1 in periodo_usuario.values:
     if not recuperar_ult_pagamento.empty:
         periodo_usuario = periodo_usuario.iloc[-1]
         df_usuario_periodo = df.loc[(df["TERCEIRIZADO"] == recuperar_nome) & (df["PERIODO"] == periodo_usuario)]
