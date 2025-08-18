@@ -8,7 +8,7 @@ import json
 from google.oauth2 import service_account
 from datetime import datetime
 import gspread
-from utils import client, credentials, PROJETOS, PERIODO_1, PERIODO_2
+from utils import client, credentials, PROJETOS, PERIODO_1
 
 client = gspread.authorize(credentials)
 
@@ -198,7 +198,7 @@ with st.form(key="servico"):
     SERVICO = st.selectbox(label="Informe o tipo de serviço prestado", options=["TRANSCRIÇÃO/CORTE"])
     DESCRICAO = st.selectbox(label="Informe a descrição do tipo de serviço prestado", options=["COMPILAÇÃO E FORNECIMENTO DE DADOS"])
     PROJETO = st.selectbox(label="Informe o nome do projeto", options=PROJETOS)
-    PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_1, PERIODO_2])
+    PERIODO = st.selectbox(label="Informe o período no qual o projeto ocorreu", options=[PERIODO_1])
     HORAS_TOTAIS = st.text_input(label="Informe a quantidade TOTAL DE HORAS trabalhadas no formato hh:mm:ss", placeholder="162:36:00")
     VALOR = st.text_input(label="Informe o valor da hora trabalhada", placeholder="17,00")
     TIPO_COLABORADOR = st.selectbox(label="Tipo de Colaborador", options=["MEI"])
