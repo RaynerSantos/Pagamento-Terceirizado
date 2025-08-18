@@ -23,6 +23,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict,
 client = gspread.authorize(credentials)
 
 PERIODO_1 = "20/07/2025 A 04/08/2025"
+PERIODO_2 = "05/08/2025 A 17/08/2025"
 # PERIODO_2 = "11/08/2025 A 05/09/2025"
 
 PROJETOS = [
